@@ -3,7 +3,7 @@ import React from 'react';
 const Logo = () => {
 	return (
 		<svg
-			className='w-6 h-6'
+			className='w-6 h-6 md:w-10 md:h-10 justify-self-center self-center'
 			enableBackground={'new 0 0 121.61 122.88'}
 			fill='#A2BFFE'
 			version='1.1'

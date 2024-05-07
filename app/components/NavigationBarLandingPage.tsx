@@ -12,9 +12,10 @@ const NavigationBarLandingPage = () => {
 		{ name: 'Contact', href: '/contact', icon: <ContactIcon /> },
 	];
 	return (
-		<div className='flex pt-3 flex-row w-full items-center justify-evenly'>
-			<Menu links={links} />
+		<div className='flex py-3 px-5 md:py-6 md:px-10 flex-row w-full items-center justify-between'>
 			<Logo />
+			<Menu links={links} />
+
 			<div className='md:flex flex-row items-center hidden gap-4'>
 				{links.map((link) => {
 					return (
@@ -27,17 +28,18 @@ const NavigationBarLandingPage = () => {
 					);
 				})}
 			</div>
-
-			<Link
-				href={'/appointment'}
-				className='btn btn-primary rounded-full hidden md:block'>
-				Book an Appointment
-			</Link>
-			<Link
-				href={'/our-services'}
-				className='btn btn-primary rounded-full hidden md:block'>
-				Our Services
-			</Link>
+			<div className='flex flex-row items-center gap-4'>
+				<Link
+					href={'/appointment'}
+					className='btn btn-primary text-xs rounded-full hidden md:flex'>
+					Book an Appointment
+				</Link>
+				<Link
+					href={'/our-services'}
+					className='btn btn-primary text-xs rounded-full hidden md:flex'>
+					Our Services
+				</Link>
+			</div>
 		</div>
 	);
 };

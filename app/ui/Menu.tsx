@@ -13,7 +13,7 @@ interface MenuProps {
 
 const Menu = ({ links }: MenuProps) => {
 	return (
-		<div className='dropdown md:hidden'>
+		<div className='dropdown dropdown-end md:hidden'>
 			<div
 				tabIndex={0}
 				role='button'
