@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@auth/supabase-adapter": "^1.0.0",
+    "@supabase/ssr": "^0.3.0",
     "@supabase/supabase-js": "^2.43.1",
     "clsx": "^2.1.1",
     "next": "14.2.3",
