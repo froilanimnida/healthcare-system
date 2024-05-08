@@ -44,7 +44,7 @@ const OurMedicalServices = () => {
 				{medicalServices.map((service) => {
 					return (
 						<div
-							className='border shadow-md border-slate-300 p-5 rounded-xl flex flex-col gap-3'
+							className='border cursor-pointer shadow-md hover:shadow-2xl duration-300 border-slate-300 p-5 rounded-xl flex flex-col gap-3'
 							key={service.title}>
 							<div className='bg-cyan-100 w-fit p-2 rounded-xl'>
 								{service.icon}

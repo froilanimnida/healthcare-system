@@ -25,12 +25,12 @@ const TrustYourHealthToUsCard = () => {
 				</p>
 				<div className='flex flex-col md:flex-row gap-5'>
 					<Link
-						className='btn bg-cyan-400 rounded-full'
+						className='hover:scale-105 transition-all duration-300 btn bg-cyan-400 rounded-full'
 						href={'/appointment'}>
 						Book an appointment
 					</Link>
 					<Link
-						className='btn btn-ghost rounded-full'
+						className='hover:scale-105 transition-all duration-300 btn btn-ghost rounded-full'
 						href={'/trust-your-health-to-us'}>
 						Learn more about our team
 					</Link>

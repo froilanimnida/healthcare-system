@@ -43,7 +43,7 @@ const OurBlogs = () => {
 					return (
 						<div
 							key={index}
-							className='card w-full bg-base-100 shadow-xl'>
+							className='card w-full bg-base-100 shadow-xl hover:scale-105 transition-all duration-300'>
 							<figure>
 								<Image
 									src={content.thumbnails}

@@ -17,7 +17,23 @@ const config: Config = {
 	},
 	plugins: [require('daisyui')],
 	daisyui: {
-		themes: ['cupcake'], // business add here
+		themes: [
+			{
+				mainTheme: {
+					primary: '#6097ff',
+					secondary: '#e3ecfe',
+					accent: '#00ffff',
+					neutral: '#ff00ff',
+					'base-100': '#ffffff',
+					info: '#0000ff',
+					success: '#00ff00',
+					warning: '#fdfd96',
+					error: '#ff0000',
+				},
+			},
+			// 'cupcake',
+			'mainTheme',
+		], // business add here
 	},
 };
 export default config;
