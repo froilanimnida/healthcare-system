@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 import './globals.css';
+import { Toaster } from 'react-hot-toast';
 
-const inter = Poppins({
+const poppins = Poppins({
 	weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
 	subsets: ['latin'],
 });
@@ -19,7 +20,8 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang='en'>
-			<body className={inter.className}>
+			<body className={poppins.className}>
+				<Toaster />
 				<main className='w-full flex flex-col justify-center items-center'>
 					{children}
 				</main>
