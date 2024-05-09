@@ -20,11 +20,9 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang='en'>
-			<body className={poppins.className}>
+			<body className={`${poppins.className} min-h-screen w-full `}>
 				<Toaster />
-				<main className='w-full flex flex-col justify-center items-center'>
-					{children}
-				</main>
+				<main className='min-h-screen w-full'>{children}</main>
 			</body>
 		</html>
 	);

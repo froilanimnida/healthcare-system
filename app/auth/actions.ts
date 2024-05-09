@@ -6,6 +6,16 @@ import { z } from 'zod';
 import { createClient } from '@/utils/supabase/server';
 import { supabase } from '../lib/config/supabaseClient';
 
+const updateAndResetPasswordSchema = z
+	.object({
+		newPassword: z.string().min(8),
+		confirmPassword: z.string().min(8),
+	})
+	.refine((data) => data.newPassword === data.confirmPassword, {
+		message: 'Passwords do not match',
+		path: ['confirmPassword'],
+	});
+
 const signUpSchema = z
 	.object({
 		email: z.string().email(),
@@ -24,6 +34,15 @@ const signUpSchema = z
 	.refine((data) => data.email && data.password, {
 		message: 'Email and password are required',
 		path: ['email', 'password'],
+	});
+
+const forgotPasswordSchema = z
+	.object({
+		email: z.string().email(),
+	})
+	.refine((data) => data.email, {
+		message: 'Email is required',
+		path: ['email'],
 	});
 
 const loginSchema = z
@@ -102,4 +121,37 @@ export async function logoutSession() {
 		throw new Error(error.message);
 	}
 	redirect('/');
+}
+
+export async function forgotPassword(formData: FormData) {
+	const result = forgotPasswordSchema.parse({
+		email: formData.get('email') as string,
+	});
+	if (!result.email) {
+		throw new Error('Email is required');
+	}
+	const { email } = result;
+
+	const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+		redirectTo: 'http://localhost:3000/account/reset-password',
+	});
+}
+
+export async function resetAndUpdatePassword(formData: FormData) {
+	const supabase = createClient();
+	const data = updateAndResetPasswordSchema.parse({
+		newPassword: formData.get('newPassword') as string,
+		confirmPassword: formData.get('confirmPassword') as string,
+	});
+
+	if (data.newPassword !== data.confirmPassword) {
+		throw new Error('Passwords do not match');
+	}
+
+	supabase.auth.updateUser({
+		password: data.newPassword,
+	});
+
+	revalidatePath('/', 'layout');
+	redirect('/account/login');
 }

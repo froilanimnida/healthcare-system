@@ -9,7 +9,7 @@ import EmergencyHotlines from './ui/HeroSection/EmergencyHotlines';
 
 export default function Home() {
 	return (
-		<div className='w-full flex flex-col justify-center items-center gap-10 max-w-7xl'>
+		<div className='w-full flex flex-col justify-center items-center gap-10'>
 			<NavigationBarLandingPage />
 			<Hero />
 			<OurMedicalServices />

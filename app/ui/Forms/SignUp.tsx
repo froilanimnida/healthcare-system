@@ -1,109 +1,127 @@
 'use client';
 import React from 'react';
+import { useState } from 'react';
 import { signup } from '@/app/auth/actions';
-import Link from 'next/link';
 import toast from 'react-hot-toast';
-import { logoutSession } from '@/app/auth/actions';
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Icons } from '@/components/ui/icons';
+import {
+	Select,
+	SelectContent,
+	SelectGroup,
+	SelectItem,
+	SelectLabel,
+	SelectTrigger,
+	SelectValue,
+} from '@/components/ui/select';
+import Link from 'next/link';
 
-const SignUp = () => {
+interface SignUpFormProps {
+	className?: string;
+}
+
+const SignUp = ({ className, ...props }: SignUpFormProps) => {
+	const [isLoading, setIsLoading] = useState(false);
 	return (
-		<form
-			action={async (formData: FormData) => {
-				try {
-					await toast.promise(signup(formData), {
-						loading: 'Signing Up...',
-						success: 'Signed Up!',
-						error:
-							'Failed to Sign Up, Please check your details and try again.',
-					});
-				} catch (error: any) {
-					console.error(error);
-				}
-			}}
-			className='card-body flex flex-col justify-center md:flex-row items-center gap-5 w-full'>
-			<div className='w-full flex flex-col md:flex-row gap-3'>
-				<div className='flex flex-col justify-start md:justify-center md:items-center gap-3 md:w-1/2'>
-					<h2 className='card-title'>Create an account</h2>
-					<p className='h-fit'>To get started, create an account</p>
-				</div>
-				<div className='card-actions md:w-1/2'>
-					<label className='form-control w-full'>
-						<div className='label'>
-							<span className='label-text'>Email</span>
-						</div>
-						<input
-							type='email'
+		<div
+			className={cn('grid gap-6 w-full', className)}
+			{...props}>
+			<form
+				action={async (formData: FormData) => {
+					setIsLoading(true);
+					try {
+						await toast.promise(signup(formData), {
+							loading: 'Signing Up...',
+							success: 'Signed Up!',
+							error:
+								'Failed to Sign Up, Please check your details and try again.',
+						});
+					} catch (error: any) {
+						setIsLoading(false);
+						console.error(error);
+					} finally {
+						setIsLoading(false);
+					}
+				}}>
+				<div className='grid gap-2'>
+					<div className='grid gap-1'>
+						<Label
+							className='sr-only'
+							htmlFor='email'>
+							Email
+						</Label>
+						<Input
 							name='email'
-							placeholder='Your E-Mail'
-							className='input input-bordered w-full'
+							placeholder='name@example.com'
+							type='email'
+							autoCapitalize='none'
+							autoComplete='email'
+							autoCorrect='off'
+							disabled={isLoading}
 						/>
-					</label>
-
-					<label className='form-control w-full'>
-						<div className='label'>
-							<span className='label-text'>Password</span>
-						</div>
-						<input
-							name='password'
-							type='password'
-							placeholder='Type here'
-							className='input input-bordered w-full'
-						/>
-					</label>
-					<label className='form-control w-full '>
-						<div className='label'>
-							<span className='label-text'>Confirm Password</span>
-						</div>
-						<input
-							name='confirmPassword'
-							type='password'
-							placeholder='Type here'
-							className='input input-bordered w-full'
-						/>
-					</label>
-					<div className='flex mt-5 flex-col justify-center items-center w-full gap-5'>
-						<div className='form-control'>
-							<label className='label cursor-pointer gap-3'>
-								<span className='label-text'>
-									By signing up, you agree on our terms and agreement and on our
-									privacy policy.
-								</span>
-								<input
-									name='terms'
-									type='checkbox'
-									className='checkbox'
-								/>
-							</label>
-						</div>
-						<button
-							type='submit'
-							className='btn btn-primary w-3/4 lg:w-1/2'>
-							Proceed
-						</button>
-						<Link
-							className='btn btn-ghost w-3/4 lg:w-1/2'
-							href={'/account/login'}>
-							Login Instead
-						</Link>
-						<button
-							onClick={async () => {
-								try {
-									await toast.promise(logoutSession(), {
-										loading: 'Logging out...',
-										success: 'Logged out!',
-										error: 'Failed to logout',
-									});
-								} catch (error: any) {
-									console.error(error);
-								}
-							}}
-							className='btn btn-error w-3/4 lg:w-1/2'>
-							Logout
-						</button>
 					</div>
+					<div className='grid gap-1'>
+						<Select>
+							<SelectTrigger className='w-full'>
+								<SelectValue placeholder='Role' />
+							</SelectTrigger>
+							<SelectContent>
+								<SelectGroup>
+									<SelectLabel>Role</SelectLabel>
+									<SelectItem value='admin'>Admin</SelectItem>
+									<SelectItem value='patient'>Patient</SelectItem>
+									<SelectItem value='doctor'>Doctor</SelectItem>
+								</SelectGroup>
+							</SelectContent>
+						</Select>
+					</div>
+					<div className='grid gap-1'>
+						<Label
+							className='sr-only'
+							htmlFor='password'>
+							Password
+						</Label>
+						<Input
+							name='password'
+							placeholder='Password'
+							type='password'
+							autoComplete='new-password'
+							disabled={isLoading}
+						/>
+					</div>
+					<div className='grid gap-1'>
+						<Label
+							className='sr-only'
+							htmlFor='confirmPassword'>
+							Confirm Password
+						</Label>
+						<Input
+							name='confirmPassword'
+							placeholder='Confirm Password'
+							type='password'
+							autoComplete='new-password'
+							disabled={isLoading}
+						/>
+					</div>
+					<Button
+						type='submit'
+						disabled={isLoading}>
+						{isLoading && (
+							<Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
+						)}
+						Sign Up
+					</Button>
+					<Link
+						href='/account/login'
+						className='text-sm text-center mt-2'>
+						Already have an account? Login
+					</Link>
 				</div>
-			</div>
-		</form>
+			</form>
+		</div>
 	);
 };
 
