@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { Toaster } from 'react-hot-toast';
+import { TooltipProvider } from '@/components/ui/tooltip';
 
 const inter = Inter({
 	weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
@@ -20,10 +21,12 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang='en'>
-			<body className={`${inter.className} min-h-screen w-full `}>
-				<Toaster />
-				<main className='min-h-screen w-full'>{children}</main>
-			</body>
+			<TooltipProvider>
+				<body className={`${inter.className} min-h-screen w-full`}>
+					<Toaster />
+					<main className='min-h-screen w-full'>{children}</main>
+				</body>
+			</TooltipProvider>
 		</html>
 	);
 }

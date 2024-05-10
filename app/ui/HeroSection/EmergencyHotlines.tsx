@@ -2,10 +2,11 @@ import React from 'react';
 import { HomeIcon, PhoneIcon } from '../icons';
 import Image from 'next/image';
 import CallingPerson from '@/public/images/hero/calling-person.jpg';
+import { Card, CardHeader, CardContent } from '@/components/ui/card';
 
 const EmergencyHotlines = () => {
 	return (
-		<div className='w-11/12 flex flex-col lg:flex-row justify-center lg:justify-between items-center gap-10'>
+		<div className='flex flex-col lg:flex-row justify-center lg:justify-between items-center gap-10'>
 			<div className='w-11/12 lg:w-1/2 xl:w-2/5'>
 				<Image
 					style={{
@@ -28,30 +29,38 @@ const EmergencyHotlines = () => {
 					</p>
 				</div>
 
-				<div className='border hover:shadow-xl transition-all duration-300 border-slate-400 p-4 rounded-xl'>
-					<div className='flex border-l-2 border-primary pl-3 flex-col gap-3'>
-						<PhoneIcon />
-						<p className='text-primary'>123-456-7890</p>
-						<h3 className='font-semibold text-lg'>Medical Emergency</h3>
-						<p>
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-							Accusamus eos voluptas facilis alias, non soluta vel dicta
-							voluptatem consequatur?
-						</p>
+				<Card>
+					<div className='flex flex-col gap-3'>
+						<CardHeader>
+							<PhoneIcon />
+							<p className='text-primary'>123-456-7890</p>
+						</CardHeader>
+						<CardContent>
+							<h3 className='font-semibold text-lg'>Medical Emergency</h3>
+							<p>
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+								Accusamus eos voluptas facilis alias, non soluta vel dicta
+								voluptatem consequatur?
+							</p>
+						</CardContent>
 					</div>
-				</div>
-				<div className='border hover:shadow-xl transition-all duration-300 border-slate-400 p-4 rounded-xl'>
-					<div className='flex border-l-2 border-lime-500 pl-3 flex-col gap-3'>
-						<HomeIcon />
-						<p className='text-primary'>123-456-7890</p>
-						<h3 className='font-semibold text-lg'>Home Service</h3>
-						<p>
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-							Accusamus eos voluptas facilis alias, non soluta vel dicta
-							voluptatem consequatur?
-						</p>
+				</Card>
+				<Card>
+					<div className='flex flex-col gap-3'>
+						<CardHeader>
+							<HomeIcon />
+							<p className='text-primary'>123-456-7890</p>
+						</CardHeader>
+						<CardContent>
+							<h3 className='font-semibold text-lg'>Home Service</h3>
+							<p>
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+								Accusamus eos voluptas facilis alias, non soluta vel dicta
+								voluptatem consequatur?
+							</p>
+						</CardContent>
 					</div>
-				</div>
+				</Card>
 			</div>
 		</div>
 	);

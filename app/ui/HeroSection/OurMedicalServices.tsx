@@ -1,7 +1,7 @@
-import { link } from 'fs';
 import React from 'react';
 import { HealthIcon, MicroscopeIcon, SurgeryIcon } from '@/app/ui/icons';
 import Link from 'next/link';
+import { Card } from '@/components/ui/card';
 
 const OurMedicalServices = () => {
 	const medicalServices = [
@@ -28,11 +28,9 @@ const OurMedicalServices = () => {
 		},
 	];
 	return (
-		<div className='w-11/12 flex flex-col gap-5'>
+		<div className='flex flex-col gap-5'>
 			<div className='gap-3 flex flex-col'>
-				<h1 className='font-semibold text-2xl md:text-4xl'>
-					Our Medical Services
-				</h1>
+				<h1 className='font-bold text-2xl md:text-4xl'>Our Medical Services</h1>
 				<p>
 					Experience personalized and comprehensive healthcare at Our Medical
 					Services. Our dedicated team ensures your journey to optimal health
@@ -43,8 +41,8 @@ const OurMedicalServices = () => {
 			<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 lg:gap-5'>
 				{medicalServices.map((service) => {
 					return (
-						<div
-							className='border cursor-pointer shadow-md hover:shadow-2xl duration-300 border-slate-300 p-5 rounded-xl flex flex-col gap-3'
+						<Card
+							className='p-5 rounded-xl flex flex-col gap-3'
 							key={service.title}>
 							<div className='bg-cyan-100 w-fit p-2 rounded-xl'>
 								{service.icon}
@@ -70,7 +68,7 @@ const OurMedicalServices = () => {
 									/>
 								</svg>
 							</Link>
-						</div>
+						</Card>
 					);
 				})}
 			</div>
