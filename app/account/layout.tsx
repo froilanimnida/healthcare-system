@@ -1,12 +1,7 @@
 import React from 'react';
 import type { Metadata } from 'next';
-import { Poppins } from 'next/font/google';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-const poppins = Poppins({
-	weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
-	subsets: ['latin'],
-});
 
 export const metadata: Metadata = {
 	title: 'Accounts Page',

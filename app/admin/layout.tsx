@@ -1,9 +1,7 @@
-import React from 'react'
-
-const layout = () => {
-  return (
-    <div>layout</div>
-  )
+export default function RootLayout({
+	children,
+}: Readonly<{
+	children: React.ReactNode;
+}>) {
+	return <>{children}</>;
 }
-
-export default layout
