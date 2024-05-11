@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import NavigationBarLandingPage from '@/app/components/NavigationBarLandingPage';
+import FooterHero from '@/app/ui/FooterHero';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { Toaster } from 'react-hot-toast';
@@ -26,11 +28,17 @@ export default function RootLayout({
 			<TooltipProvider>
 				<body className={`${inter.className} min-h-screen w-full`}>
 					<Toaster />
-					<main className='min-h-screen w-full'>{children}</main>
+					<main className='min-h-screen w-full flex justify-center'>
+						<div className='max-w-screen-2xl w-11/12 gap-10 flex flex-col justify-center items-center min-h-screen'>
+							<NavigationBarLandingPage />
+							{children}
+							<FooterHero />
+						</div>
+					</main>
+					<Analytics />
+					<SpeedInsights />
 				</body>
 			</TooltipProvider>
-			<Analytics />
-			<SpeedInsights />
 		</html>
 	);
 }

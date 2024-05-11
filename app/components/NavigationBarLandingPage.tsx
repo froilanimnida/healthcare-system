@@ -1,7 +1,8 @@
+'use client';
 import React from 'react';
+import { usePathname } from 'next/navigation';
 import Logo from './Logo';
 import Link from 'next/link';
-import Menu from '../ui/Menu';
 import { AboutIcon, ContactIcon, DoctorIcon, PlansIcon } from '../ui/icons';
 
 const NavigationBarLandingPage = () => {
@@ -11,10 +12,16 @@ const NavigationBarLandingPage = () => {
 		{ name: 'Plans', href: '/plans', icon: <PlansIcon /> },
 		{ name: 'Contact', href: '/contact', icon: <ContactIcon /> },
 	];
+	// get the path don't show if the path is in the list: ['/account/*', '/user/*', '/admin/*', '/nurse/*', '/doctor/*']
+	const path = usePathname();
+	const pathList = ['/account', '/user', '/admin', '/nurse', '/doctor'];
+	const isPath = pathList.some((p) => path.includes(p));
 	return (
-		<div className='flex py-3 px-5 md:py-6 md:px-10 flex-row w-full items-center justify-between'>
+		<div
+			className={`${
+				isPath ? 'hidden' : 'flex'
+			} py-3 px-5 md:py-6 md:px-10 flex-row w-full items-center justify-between`}>
 			<Logo />
-			<Menu links={links} />
 
 			<div className='md:flex flex-row items-center hidden gap-4'>
 				{links.map((link) => {

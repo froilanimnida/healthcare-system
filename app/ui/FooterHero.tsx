@@ -1,10 +1,16 @@
+'use client';
 import React from 'react';
 import Link from 'next/link';
-
+import { usePathname } from 'next/navigation';
 const FooterHero = () => {
+	// get the path don't show if the path is in the list: ['/account/*', '/user/*', '/admin/*', '/nurse/*', '/doctor/*']
+	const path = usePathname();
+	const pathList = ['/account', '/user', '/admin', '/nurse', '/doctor'];
+	const isPath = pathList.some((p) => path.includes(p));
+
 	return (
 		<>
-			<div className='flex flex-col w-full'>
+			<div className={`${isPath ? 'hidden' : 'flex'} flex flex-col w-full`}>
 				<footer className='grid grid-cols-3 w-full p-10 bg-base-200 text-base-content'>
 					<nav className='flex flex-col gap-3'>
 						<h6 className='footer-title'>Services</h6>
@@ -22,6 +28,11 @@ const FooterHero = () => {
 							href={'/call-hotlines'}
 							className='link link-hover'>
 							Call and Hotlines
+						</Link>
+						<Link
+							href={'/appointment'}
+							className='link link-hover'>
+							Book an Appointment
 						</Link>
 					</nav>
 					<nav className='flex flex-col gap-3'>

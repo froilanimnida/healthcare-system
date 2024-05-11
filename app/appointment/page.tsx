@@ -1,9 +1,8 @@
-import React from 'react'
+import React from 'react';
+import AppointmentForm from '../ui/Forms/AppointmentForm';
 
 const Appointment = () => {
-  return (
-    <div>Appointment Page</div>
-  )
-}
+	return <AppointmentForm />;
+};
 
-export default Appointment
+export default Appointment;

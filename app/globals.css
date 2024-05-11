@@ -54,6 +54,6 @@
 		@apply border-border;
 	}
 	body {
-		@apply bg-background text-foreground;
+		@apply bg-gradient-to-br from-zinc-50 to-pink-50 text-foreground;
 	}
 }
