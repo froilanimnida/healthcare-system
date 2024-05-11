@@ -1320,7 +1320,10 @@ export const provinces = [
 		name: 'Negros Occidental',
 		cities: [''],
 	},
-	{ id: 54, name: 'Negros Oriental' },
+	{
+		id: 54, name: 'Negros Oriental', cities: [
+
+	] },
 	{ id: 55, name: 'Northern Samar' },
 	{ id: 56, name: 'Nueva Ecija' },
 	{ id: 57, name: 'Nueva Vizcaya' },

@@ -1,7 +1,17 @@
 'use client';
-import React from 'react';
-import { Button } from '@/components/ui/button';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { CalendarIcon } from '@radix-ui/react-icons';
+import { format } from 'date-fns';
+
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
+import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from '@/components/ui/popover';
 import {
 	Form,
 	FormControl,
@@ -37,6 +47,7 @@ import { provinces } from '@/app/schema/ProvinceData';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { z } from 'zod';
 const AppointmentForm = () => {
+	const [date, setDate] = useState<Date>();
 	const form = useForm<z.infer<typeof AppointmentFormSchema>>({
 		resolver: zodResolver(AppointmentFormSchema),
 		defaultValues: {
@@ -75,16 +86,6 @@ const AppointmentForm = () => {
 			placeholder: 'Cruz',
 		},
 		{
-			name: 'province',
-			label: 'Province',
-			placeholder: 'Metro Manila',
-		},
-		{
-			name: 'city',
-			label: 'City',
-			placeholder: 'Quezon City',
-		},
-		{
 			name: 'house_number',
 			label: 'House Number',
 			placeholder: '123',
@@ -120,16 +121,6 @@ const AppointmentForm = () => {
 			placeholder: '+639123456789',
 		},
 		{
-			name: 'sex',
-			label: 'Sex',
-			placeholder: '',
-		},
-		{
-			name: 'department',
-			label: 'Department',
-			placeholder: 'Cardiology',
-		},
-		{
 			name: 'doctor',
 			label: 'Doctor',
 			placeholder: 'Dr. Juan Dela Cruz',
@@ -140,7 +131,7 @@ const AppointmentForm = () => {
 			<CardHeader className='font-bold text-xl md:text-2xl lg:text-4xl'>
 				<CardTitle>Book an Appointment</CardTitle>
 				<CardDescription>
-					Please fill up the form below to book an appointment.
+					Please fill out the form below to book an appointment.
 				</CardDescription>
 			</CardHeader>
 			<Form {...form}>
@@ -155,6 +146,7 @@ const AppointmentForm = () => {
 										<FormLabel>{label}</FormLabel>
 										<FormControl>
 											<Input
+												required
 												placeholder={placeholder}
 												{...field}
 											/>
@@ -171,7 +163,7 @@ const AppointmentForm = () => {
 						<FormItem>
 							<FormLabel>Province</FormLabel>
 							<FormControl>
-								<Select>
+								<Select required>
 									<SelectTrigger>
 										<SelectValue placeholder='Select Province' />
 									</SelectTrigger>
@@ -194,7 +186,7 @@ const AppointmentForm = () => {
 						<FormItem>
 							<FormLabel>City</FormLabel>
 							<FormControl>
-								<Select>
+								<Select required>
 									<SelectTrigger>
 										<SelectValue placeholder='Select City' />
 									</SelectTrigger>
@@ -208,33 +200,100 @@ const AppointmentForm = () => {
 						</FormItem>
 
 						<FormItem>
-							<FormLabel>Gender</FormLabel>
+							<FormLabel>Sex</FormLabel>
 							<FormControl>
-								<RadioGroup className='flex flex-col md:flex-row'>
-									<div className='flex items-center space-x-2'>
-										<RadioGroupItem
-											value='male'
-											id='r1'
-										/>
-										<Label htmlFor='r1'>Male</Label>
-									</div>
-									<div className='flex items-center space-x-2'>
-										<RadioGroupItem
-											value='female'
-											id='r2'
-										/>
-										<Label htmlFor='r2'>Female</Label>
-									</div>
-									<div className='flex items-center space-x-2'>
-										<RadioGroupItem
-											value='other'
-											id='r3'
-										/>
-										<Label htmlFor='r3'>Other</Label>
-									</div>
-								</RadioGroup>
+								<Select required>
+									<SelectTrigger>
+										<SelectValue placeholder='Select your sex' />
+									</SelectTrigger>
+									<SelectContent>
+										<SelectGroup>
+											<SelectLabel>Sex</SelectLabel>
+											<SelectItem value='male'>Male</SelectItem>
+											<SelectItem value='female'>Female</SelectItem>
+											<SelectItem value='other'>Other</SelectItem>
+										</SelectGroup>
+									</SelectContent>
+								</Select>
 							</FormControl>
-							<FormDescription>Select gender.</FormDescription>
+							<FormDescription>Select sex.</FormDescription>
+						</FormItem>
+
+						<FormItem>
+							<FormLabel>Date of Appointment</FormLabel>
+							<FormControl>
+								<Popover>
+									<PopoverTrigger asChild>
+										<Button
+											variant={'outline'}
+											className={cn(
+												'w-full justify-start text-left font-normal',
+												!date && 'text-muted-foreground',
+											)}>
+											<CalendarIcon className='mr-2 h-4 w-4' />
+											{date ? format(date, 'PPP') : <span>Pick a date</span>}
+										</Button>
+									</PopoverTrigger>
+									<PopoverContent className='w-auto p-0'>
+										<Calendar
+											mode='single'
+											selected={date}
+											onSelect={setDate}
+											initialFocus
+										/>
+									</PopoverContent>
+								</Popover>
+							</FormControl>
+
+							<FormDescription>
+								Select the date of your appointment.
+							</FormDescription>
+						</FormItem>
+
+						<FormItem>
+							<FormLabel>Department</FormLabel>
+							<FormControl>
+								<Select required>
+									<SelectTrigger>
+										<SelectValue placeholder='Select Department' />
+									</SelectTrigger>
+									<SelectContent>
+										<SelectGroup>
+											<SelectLabel>Departments</SelectLabel>
+											<SelectItem value='anaesthesia'>
+												Department of Anaesthesia
+											</SelectItem>
+											<SelectItem value='dentistry'>
+												Department of Dentistry
+											</SelectItem>
+											<SelectItem value='obstetrics_and_gynecology'>
+												Department of Obstetrics & Gynecology
+											</SelectItem>
+											<SelectItem value='pathology'>
+												Department of Pathology
+											</SelectItem>
+											<SelectItem value='pediatrics'>
+												Department of Pediatrics
+											</SelectItem>
+											<SelectItem value='radiology'>
+												Department of Radiology
+											</SelectItem>
+											<SelectItem value='rehabilitation_medicine'>
+												Department of Rehabilitation Medicine
+											</SelectItem>
+											<SelectItem value='surgery'>
+												Department of Surgery
+											</SelectItem>
+											<SelectItem value='psychiatry'>
+												Department of Psychiatry
+											</SelectItem>
+										</SelectGroup>
+									</SelectContent>
+								</Select>
+							</FormControl>
+							<FormDescription>
+								Which department do you want to book an appointment?
+							</FormDescription>
 						</FormItem>
 					</CardContent>
 					<CardFooter className='flex justify-between items-center w-full'>

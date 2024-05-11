@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 
 export const metadata: Metadata = {
 	title: 'Accounts Page',
+	// #TODO:Change Client Name
 	description: 'East Avenue Medical Center Website and Booking System',
 };
 

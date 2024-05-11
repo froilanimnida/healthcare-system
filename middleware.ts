@@ -1,19 +1,25 @@
 import { updateSession } from '@/utils/supabase/middleware';
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function middleware(request: NextRequest) {
-	return await updateSession(request);
+	const response = await updateSession(request);
+
+	const user = response.headers.get('x-supabase-user');
+	console.log(user);
+	const restrictedPaths = ['/admin/*', '/user/*', '/nurse/*'];
+	const isRestrictedPath = restrictedPaths.some((path) =>
+		new RegExp(`^${path.replace('*', '.*')}$`).test(request.nextUrl.pathname),
+	);
+
+	if (isRestrictedPath && !user) {
+		return NextResponse.redirect('/login');
+	}
+
+	return response;
 }
 
 export const config = {
 	matcher: [
-		/*
-		 * Match all request paths except for the ones starting with:
-		 * - _next/static (static files)
-		 * - _next/image (image optimization files)
-		 * - favicon.ico (favicon file)
-		 * Feel free to modify this pattern to include more paths.
-		 */
 		'/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
 	],
 };

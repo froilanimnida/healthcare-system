@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation';
 import Logo from './Logo';
 import Link from 'next/link';
 import { AboutIcon, ContactIcon, DoctorIcon, PlansIcon } from '../ui/icons';
+import { Button } from '@/components/ui/button';
 
 const NavigationBarLandingPage = () => {
 	const links = [
@@ -36,16 +37,12 @@ const NavigationBarLandingPage = () => {
 				})}
 			</div>
 			<div className='flex flex-row items-center gap-4'>
-				<Link
-					href={'/appointment'}
-					className='btn btn-primary text-xs rounded-full hidden md:flex'>
-					Book an Appointment
-				</Link>
-				<Link
-					href={'/our-services'}
-					className='btn btn-primary text-xs rounded-full hidden md:flex'>
-					Our Services
-				</Link>
+				<Button variant='default'>
+					<Link href={'/account/login'}>Log In</Link>
+				</Button>
+				<Button variant='outline'>
+					<Link href={'/account/sign-up'}>Sign Up</Link>
+				</Button>
 			</div>
 		</div>
 	);

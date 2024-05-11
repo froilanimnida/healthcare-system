@@ -14,6 +14,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+	// #TODO:Change Client Name
 	title: 'East Avenue Medical Center',
 	description: 'East Avenue Medical Center Website and Booking System',
 };
@@ -29,7 +30,7 @@ export default function RootLayout({
 				<body className={`${inter.className} min-h-screen w-full`}>
 					<Toaster />
 					<main className='min-h-screen w-full flex justify-center'>
-						<div className='max-w-screen-2xl w-11/12 gap-10 flex flex-col justify-center items-center min-h-screen'>
+						<div className='flex flex-col w-full min-h-screen'>
 							<NavigationBarLandingPage />
 							{children}
 							<FooterHero />
