@@ -9,14 +9,14 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Icons } from '@/components/ui/icons';
 import {
-	Select,
-	SelectContent,
-	SelectGroup,
-	SelectItem,
-	SelectLabel,
-	SelectTrigger,
-	SelectValue,
-} from '@/components/ui/select';
+	Card,
+	CardContent,
+	CardFooter,
+	CardDescription,
+	CardHeader,
+	CardTitle,
+} from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
 import Link from 'next/link';
 
 interface SignUpFormProps {
@@ -27,100 +27,108 @@ const SignUp = ({ className, ...props }: SignUpFormProps) => {
 	const [isLoading, setIsLoading] = useState(false);
 	return (
 		<div
-			className={cn('grid gap-6 w-full', className)}
+			className={cn('grid gap-6', className)}
 			{...props}>
-			<form
-				action={async (formData: FormData) => {
-					setIsLoading(true);
-					try {
-						await toast.promise(signup(formData), {
-							loading: 'Signing Up...',
-							success: 'Signed Up!',
-							error:
-								'Failed to Sign Up, Please check your details and try again.',
-						});
-					} catch (error: any) {
-						setIsLoading(false);
-						console.error(error);
-					} finally {
-						setIsLoading(false);
-					}
-				}}>
-				<div className='grid gap-2'>
-					<div className='grid gap-1'>
-						<Label
-							className='sr-only'
-							htmlFor='email'>
-							Email
-						</Label>
-						<Input
-							name='email'
-							placeholder='name@example.com'
-							type='email'
-							autoCapitalize='none'
-							autoComplete='email'
-							autoCorrect='off'
-							disabled={isLoading}
-						/>
-					</div>
-					<div className='grid gap-1'>
-						<Select>
-							<SelectTrigger className='w-full'>
-								<SelectValue placeholder='Role' />
-							</SelectTrigger>
-							<SelectContent>
-								<SelectGroup>
-									<SelectLabel>Role</SelectLabel>
-									<SelectItem value='admin'>Admin</SelectItem>
-									<SelectItem value='patient'>Patient</SelectItem>
-									<SelectItem value='doctor'>Doctor</SelectItem>
-								</SelectGroup>
-							</SelectContent>
-						</Select>
-					</div>
-					<div className='grid gap-1'>
-						<Label
-							className='sr-only'
-							htmlFor='password'>
-							Password
-						</Label>
-						<Input
-							name='password'
-							placeholder='Password'
-							type='password'
-							autoComplete='new-password'
-							disabled={isLoading}
-						/>
-					</div>
-					<div className='grid gap-1'>
-						<Label
-							className='sr-only'
-							htmlFor='confirmPassword'>
-							Confirm Password
-						</Label>
-						<Input
-							name='confirmPassword'
-							placeholder='Confirm Password'
-							type='password'
-							autoComplete='new-password'
-							disabled={isLoading}
-						/>
-					</div>
-					<Button
-						type='submit'
-						disabled={isLoading}>
-						{isLoading && (
-							<Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
-						)}
-						Sign Up
-					</Button>
-					<Link
-						href='/account/login'
-						className='text-sm text-center mt-2'>
-						Already have an account? Login
-					</Link>
-				</div>
-			</form>
+			<Card>
+				<CardHeader>
+					<CardTitle>Sign Up</CardTitle>
+					<CardDescription>Sign up to continue</CardDescription>
+				</CardHeader>
+				<form
+					className='gap-3 flex flex-col items-center justify-center'
+					action={async (formData: FormData) => {
+						setIsLoading(true);
+						try {
+							await toast.promise(signup(formData), {
+								loading: 'Signing Up...',
+								success: 'Signed Up!',
+								error:
+									'Failed to Sign Up, Please check your details and try again.',
+							});
+						} catch (error: any) {
+							setIsLoading(false);
+							console.error(error);
+						} finally {
+							setIsLoading(false);
+						}
+					}}>
+					<CardContent className='flex flex-col gap-5 justify-center items-center w-full'>
+						<div className='grid gap-3 w-full'>
+							<div className='grid gap-1'>
+								<Label
+									className='sr-only'
+									htmlFor='email'>
+									Email
+								</Label>
+								<Input
+									name='email'
+									placeholder='name@example.com'
+									type='email'
+									autoCapitalize='none'
+									autoComplete='email'
+									autoCorrect='off'
+									disabled={isLoading}
+								/>
+							</div>
+							<div className='grid gap-1'>
+								<Label
+									className='sr-only'
+									htmlFor='password'>
+									Password
+								</Label>
+								<Input
+									name='password'
+									placeholder='Password'
+									type='password'
+									autoComplete='new-password'
+									disabled={isLoading}
+								/>
+							</div>
+							<div className='grid gap-1'>
+								<Label
+									className='sr-only'
+									htmlFor='confirmPassword'>
+									Confirm Password
+								</Label>
+								<Input
+									name='confirmPassword'
+									placeholder='Confirm Password'
+									type='password'
+									autoComplete='new-password'
+									disabled={isLoading}
+								/>
+							</div>
+							<div className='flex flex-row w-full gap-3'>
+								<Checkbox
+									name='terms'
+									id='terms'
+								/>
+								<label
+									htmlFor='terms'
+									className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'>
+									Accept terms and conditions
+								</label>
+							</div>
+						</div>
+					</CardContent>
+					<CardFooter className='flex flex-col gap-2 items-center justify-center'>
+						<Button
+							type='submit'
+							className='w-full'
+							disabled={isLoading}>
+							{isLoading && (
+								<Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
+							)}
+							Sign Up
+						</Button>
+						<Link
+							href='/account/login'
+							className='text-sm text-center mt-2'>
+							Already have an account? Login
+						</Link>
+					</CardFooter>
+				</form>
+			</Card>
 		</div>
 	);
 };

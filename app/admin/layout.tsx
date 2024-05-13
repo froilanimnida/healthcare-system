@@ -70,7 +70,7 @@ export default function AdminLayout({
 					<Tooltip>
 						<TooltipTrigger asChild>
 							<Link
-								href='#'
+								href={'/admin/doctors'}
 								className='flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8'>
 								<Stethoscope className='h-5 w-5' />
 							</Link>
@@ -124,7 +124,7 @@ export default function AdminLayout({
 				</nav>
 			</aside>
 			<div className='flex flex-col sm:gap-4 sm:py-4 sm:pl-14'>
-				<header className='sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6'>
+				<header className='justify-between sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6'>
 					<Sheet>
 						<SheetTrigger asChild>
 							<Button
@@ -169,7 +169,7 @@ export default function AdminLayout({
 									Customers
 								</Link>
 								<Link
-									href='#'
+									href={'/admin/settings'}
 									className='flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground'>
 									<LineChart className='h-5 w-5' />
 									Settings
@@ -187,15 +187,7 @@ export default function AdminLayout({
 							<BreadcrumbSeparator />
 						</BreadcrumbList>
 					</Breadcrumb>
-					<div className='relative ml-auto flex-1 md:grow-0'>
-						<Search className='absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground' />
-						<Input
-							type='search'
-							placeholder='Search...'
-							className='w-full rounded-lg bg-background pl-8 md:w-[200px] lg:w-[320px]'
-						/>
-					</div>
-					<DropdownMenu>
+					<DropdownMenu modal={true}>
 						<DropdownMenuTrigger asChild>
 							<Button
 								variant='outline'
@@ -207,7 +199,9 @@ export default function AdminLayout({
 						<DropdownMenuContent align='end'>
 							<DropdownMenuLabel>My Account</DropdownMenuLabel>
 							<DropdownMenuSeparator />
-							<DropdownMenuItem>Settings</DropdownMenuItem>
+							<DropdownMenuItem>
+								<Link href={'/admin/settings'}>Settings</Link>
+							</DropdownMenuItem>
 							<DropdownMenuItem>Support</DropdownMenuItem>
 							<DropdownMenuSeparator />
 							<DropdownMenuItem>

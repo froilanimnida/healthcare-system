@@ -9,6 +9,106 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      appointments_anon: {
+        Row: {
+          appointment_id: number
+          barangay: string
+          city: string
+          date_of_birth: string
+          department: string
+          doctor_uuid: string
+          email: string
+          first_name: string
+          house_number: number
+          last_name: string
+          middle_name: string
+          mobile_number: string
+          province: string
+          sex: string
+          street: string
+          zip_code: number
+        }
+        Insert: {
+          appointment_id?: number
+          barangay: string
+          city: string
+          date_of_birth: string
+          department: string
+          doctor_uuid?: string
+          email: string
+          first_name: string
+          house_number: number
+          last_name: string
+          middle_name: string
+          mobile_number: string
+          province: string
+          sex: string
+          street: string
+          zip_code: number
+        }
+        Update: {
+          appointment_id?: number
+          barangay?: string
+          city?: string
+          date_of_birth?: string
+          department?: string
+          doctor_uuid?: string
+          email?: string
+          first_name?: string
+          house_number?: number
+          last_name?: string
+          middle_name?: string
+          mobile_number?: string
+          province?: string
+          sex?: string
+          street?: string
+          zip_code?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "appointments_anon_doctor_uuid_fkey"
+            columns: ["doctor_uuid"]
+            isOneToOne: false
+            referencedRelation: "doctors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      doctors: {
+        Row: {
+          board_certifications: string | null
+          experience: number | null
+          id: string
+          medical_degree: string | null
+          medical_license_number: string | null
+          speciality: string | null
+        }
+        Insert: {
+          board_certifications?: string | null
+          experience?: number | null
+          id?: string
+          medical_degree?: string | null
+          medical_license_number?: string | null
+          speciality?: string | null
+        }
+        Update: {
+          board_certifications?: string | null
+          experience?: number | null
+          id?: string
+          medical_degree?: string | null
+          medical_license_number?: string | null
+          speciality?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "doctors_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["user_id"]
+          },
+        ]
+      }
       users: {
         Row: {
           address: string | null
@@ -17,10 +117,10 @@ export type Database = {
           city: string | null
           first_name: string | null
           gender: string | null
-          id: string
           last_name: string | null
           middle_name: string | null
           role: string | null
+          user_id: string
         }
         Insert: {
           address?: string | null
@@ -29,10 +129,10 @@ export type Database = {
           city?: string | null
           first_name?: string | null
           gender?: string | null
-          id: string
           last_name?: string | null
           middle_name?: string | null
           role?: string | null
+          user_id: string
         }
         Update: {
           address?: string | null
@@ -41,10 +141,10 @@ export type Database = {
           city?: string | null
           first_name?: string | null
           gender?: string | null
-          id?: string
           last_name?: string | null
           middle_name?: string | null
           role?: string | null
+          user_id?: string
         }
         Relationships: []
       }

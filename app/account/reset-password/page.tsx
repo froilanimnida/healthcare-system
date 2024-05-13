@@ -1,6 +1,12 @@
 import React from 'react';
 import ResetPasswordForm from '@/app/ui/Forms/ResetPassword';
 import Link from 'next/link';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+	title: 'Create a new password',
+	description: 'Create a new password for your account.',
+};
 
 const page = () => {
 	return (

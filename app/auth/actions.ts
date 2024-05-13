@@ -3,7 +3,6 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
 import { createClient } from '@/utils/supabase/server';
-import { supabase } from '../lib/config/supabaseClient';
 
 const updateAndResetPasswordSchema = z
 	.object({
@@ -21,7 +20,6 @@ const signUpSchema = z
 		password: z.string().min(8),
 		confirmPassword: z.string().min(8),
 		terms: z.boolean(),
-		role: z.enum(['user', 'admin', 'doctor']),
 	})
 	.refine((data) => data.password === data.confirmPassword, {
 		message: 'Passwords do not match',
@@ -64,40 +62,54 @@ const deleteSchema = z
 		path: ['user_id'],
 	});
 
-export async function getUserRole(user_id: string) {
+export async function getUserRole() {
 	const supabase = createClient();
-	const { data, error } = await supabase
-		.from('users')
-		.select('role')
-		.eq('user_id', user_id);
-	if (error) throw new Error(error.message);
-	return data;
+	const {
+		data: { user },
+	} = await supabase.auth.getUser();
+	console.log('running');
+	if (user?.role === '' || user?.role === null || user?.role === undefined) {
+		redirect('/account/role');
+	} else {
+		switch (user?.role) {
+			case 'admin':
+				redirect('/admin/dashboard');
+				break;
+			case 'doctor':
+				redirect('/doctor/dashboard');
+				break;
+			case 'user':
+				redirect('/user/dashboard');
+				break;
+			default:
+				// Handle unexpected roles here
+				redirect('/account/role');
+				break;
+		}
+	}
 }
-
 export async function login(formData: { email: string; password: string }) {
 	const supabase = createClient();
 	const data = loginSchema.safeParse(formData);
+
 	if (!data.success) throw new Error('Invalid email or password');
+	console.log('running');
 	const { error } = await supabase.auth.signInWithPassword({
 		email: data.data.email,
 		password: data.data.password,
 	});
 
-	if (error) throw new Error(error.message);
+	console.log('running 2');
 
-	const {
-		data: { user },
-	} = await supabase.auth.getUser();
+	if (error) {
+		throw new Error(error.message);
+	}
 
-	const user_role = await getUserRole(user?.id as string);
-	if (user_role[0].role === 'admin') redirect('/admin/dashboard');
-	else if (user_role[0].role === 'doctor') redirect('/doctor/dashboard');
-	else if (user_role[0].role === 'user') redirect('/user/dashboard');
+	console.log('running 3');
 
 	revalidatePath('/', 'layout');
 	return null;
 }
-
 export async function signup(formData: FormData) {
 	const supabase = createClient();
 	const data = signUpSchema.parse({
@@ -105,7 +117,6 @@ export async function signup(formData: FormData) {
 		password: formData.get('password') as string,
 		confirmPassword: formData.get('confirmPassword') as string,
 		terms: formData.get('terms') === 'on',
-		role: formData.get('role') as 'user' | 'admin' | 'doctor',
 	});
 	const result = signUpSchema.safeParse(data);
 
@@ -114,14 +125,6 @@ export async function signup(formData: FormData) {
 		throw new Error('You must agree to the terms and conditions');
 	if (result.data.password !== result.data.confirmPassword)
 		throw new Error('Passwords do not match');
-
-	if (
-		result.data.role !== 'user' &&
-		result.data.role !== 'admin' &&
-		result.data.role !== 'doctor'
-	) {
-		throw new Error('Invalid role selected');
-	}
 
 	const { error } = await supabase.auth.signUp({
 		email: result.data.email,
@@ -139,12 +142,14 @@ export async function signup(formData: FormData) {
 }
 
 export async function insertUserDataToPublic(formData: FormData) {
+	const supabase = createClient();
 	const {
 		data: { user },
 	} = await supabase.auth.getUser();
 }
 
 export async function logoutSession() {
+	const supabase = createClient();
 	const { error } = await supabase.auth.signOut();
 	if (error) throw new Error(error.message);
 	redirect('/');
@@ -183,24 +188,46 @@ export async function resetAndUpdatePassword(formData: FormData) {
 	redirect('/account/login');
 }
 
-export async function deleteUserAccount(formData: FormData) {
-	const data = deleteSchema.parse({
-		user_id: formData.get('user_id') as string,
-	});
-	if (!data.user_id) throw new Error('User ID is required');
-	const { error } = await supabase.auth.admin.deleteUser(data.user_id);
-	if (error) throw new Error(error.message);
-}
-
-export async function getAllUsers() {
+export const setRole = async (role: string) => {
 	const supabase = createClient();
+	const roleSchema = z
+		.object({
+			role: z.string(),
+		})
+		.parse({ role });
+	console.log(role);
+
+	const userRole = z
+		.enum(['admin', 'doctor', 'user', 'nurse'])
+		.parse(roleSchema.role);
+
+	if (!userRole) throw new Error('Invalid role');
 	const {
-		data: { users },
-		error,
-	} = await supabase.auth.admin.listUsers({
-		page: 1,
-		perPage: 1000,
-	});
+		data: { user },
+	} = await supabase.auth.getUser();
+	if (!user) {
+		console.log(user);
+		redirect('/account/login');
+	}
+
+	const { error } = await supabase
+		.from('users')
+		.update({ role: role })
+		.eq('user_id', user?.id);
 	if (error) throw new Error(error.message);
-	return users;
-}
+	revalidatePath('/', 'layout');
+	switch (role) {
+		case 'admin':
+			redirect('/admin/dashboard');
+			break;
+		case 'doctor':
+			redirect('/doctor/dashboard');
+			break;
+		case 'user':
+			redirect('/user/dashboard');
+			break;
+		default:
+			redirect('/account/role');
+			break;
+	}
+};

@@ -1,9 +1,12 @@
 import React from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import LoginImage from '@/public/images/hero/login-image.jpg';
 import Login from '@/app/ui/Forms/Login';
+import { Metadata } from 'next';
 
+export const metadata: Metadata = {
+	title: 'Log In to Your Account',
+	description: 'Log in to your account',
+};
+// TODO: Remove REdundancy component refer to the login form directly
 const LogIn = async () => {
 	return (
 		<>
@@ -13,9 +16,6 @@ const LogIn = async () => {
 						<h1 className='text-2xl font-semibold tracking-tight'>
 							Welcome Back!
 						</h1>
-						<p className='text-sm text-muted-foreground'>
-							Enter your email & password to continue.
-						</p>
 					</div>
 					<Login />
 				</div>

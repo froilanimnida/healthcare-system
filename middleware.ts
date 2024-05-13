@@ -4,15 +4,24 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function middleware(request: NextRequest) {
 	const response = await updateSession(request);
 
-	const user = response.headers.get('x-supabase-user');
-	console.log(user);
-	const restrictedPaths = ['/admin/*', '/user/*', '/nurse/*'];
-	const isRestrictedPath = restrictedPaths.some((path) =>
+	const user = JSON.parse(response.headers.get('x-supabase-user') || '{}').data
+		?.user;
+	const authPaths = ['/admin/*', '/user/*', '/nurse/*', '/doctor/*'];
+	const isAuthPaths = authPaths.some((path) =>
 		new RegExp(`^${path.replace('*', '.*')}$`).test(request.nextUrl.pathname),
 	);
 
-	if (isRestrictedPath && !user) {
-		return NextResponse.redirect('/login');
+	if (isAuthPaths && user === null) {
+		const url = request.nextUrl.clone();
+		url.pathname = '/account/login';
+		return NextResponse.rewrite(url);
+	}
+
+
+	if (user?.role === '' || user?.role === null) {
+		const url = request.nextUrl.clone();
+		url.pathname = '/account/role';
+		return NextResponse.rewrite(url);
 	}
 
 	return response;

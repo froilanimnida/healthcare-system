@@ -1,4 +1,5 @@
 import React from 'react';
+import AppointmentTable from '../components/AppointmentTable';
 import type { Metadata } from 'next';
 import Admin from '@/app/ui/NavigationBar/Admin';
 
@@ -8,7 +9,12 @@ export const metadata: Metadata = {
 };
 
 const AdminDashboardPage = () => {
-	return <div></div>;
+	return (
+		<div className='p-5'>
+			<Admin />
+			<AppointmentTable />
+		</div>
+	);
 };
 
 export default AdminDashboardPage;

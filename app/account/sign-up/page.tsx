@@ -1,6 +1,12 @@
 import React from 'react';
 import SignUp from '@/app/ui/Forms/SignUp';
 import Link from 'next/link';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+	title: 'Create an account',
+	description: 'Sign up for an account to get started.',
+};
 
 const SignUpPage = () => {
 	return (
@@ -11,9 +17,6 @@ const SignUpPage = () => {
 						<h1 className='text-2xl font-semibold tracking-tight'>
 							Create an account
 						</h1>
-						<p className='text-sm text-muted-foreground'>
-							Enter your email, select a role & create password to get started.
-						</p>
 					</div>
 					<SignUp />
 					<p className='px-8 text-center text-sm text-muted-foreground'>
