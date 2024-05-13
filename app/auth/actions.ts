@@ -67,11 +67,20 @@ export async function getUserRole() {
 	const {
 		data: { user },
 	} = await supabase.auth.getUser();
-	console.log('running');
-	if (user?.role === '' || user?.role === null || user?.role === undefined) {
+	console.log(user?.id);
+	const { data: user_role, error } = await supabase
+		.from('users')
+		.select('role')
+		.eq('user_id', user?.id)
+		.single();
+	if (
+		user_role?.role === '' ||
+		user_role?.role === null ||
+		user_role?.role === undefined
+	) {
 		redirect('/account/role');
 	} else {
-		switch (user?.role) {
+		switch (user_role?.role) {
 			case 'admin':
 				redirect('/admin/dashboard');
 				break;
@@ -188,6 +197,7 @@ export async function resetAndUpdatePassword(formData: FormData) {
 	redirect('/account/login');
 }
 
+// #TODO: Fix bug where the update doesn't apply to the database
 export const setRole = async (role: string) => {
 	const supabase = createClient();
 	const roleSchema = z
