@@ -1,8 +1,10 @@
 import { updateSession } from '@/utils/supabase/middleware';
 import { NextRequest, NextResponse } from 'next/server';
+import { createClient } from './utils/supabase/server';
 
 export async function middleware(request: NextRequest) {
 	const response = await updateSession(request);
+	const supabase = createClient();
 
 	const user = JSON.parse(response.headers.get('x-supabase-user') || '{}').data
 		?.user;

@@ -9,6 +9,5 @@ export async function getAnonymousAppointments() {
 		.select('*');
 
 	if (error) throw new Error(error.message);
-	console.log(appointments_anon);
 	return appointments_anon;
 }

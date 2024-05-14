@@ -64,57 +64,70 @@ const deleteSchema = z
 
 export async function getUserRole() {
 	const supabase = createClient();
-	const {
-		data: { user },
-	} = await supabase.auth.getUser();
-	console.log(user?.id);
-	const { data: user_role, error } = await supabase
-		.from('users')
-		.select('role')
-		.eq('user_id', user?.id)
-		.single();
-	if (
-		user_role?.role === '' ||
-		user_role?.role === null ||
-		user_role?.role === undefined
-	) {
-		redirect('/account/role');
-	} else {
-		switch (user_role?.role) {
-			case 'admin':
-				redirect('/admin/dashboard');
-				break;
-			case 'doctor':
-				redirect('/doctor/dashboard');
-				break;
-			case 'user':
-				redirect('/user/dashboard');
-				break;
-			default:
-				// Handle unexpected roles here
-				redirect('/account/role');
-				break;
+	let redirectPath = '';
+
+	try {
+		const {
+			data: { user },
+		} = await supabase.auth.getUser();
+
+		try {
+			const { data: status_role, error } = await supabase
+				.from('users')
+				.select('role, verified_user')
+				.eq('user_id', user?.id)
+				.single();
+
+			if (status_role?.verified_user === false) {
+				throw new Error('User is not verified');
+			} else {
+				if (
+					status_role?.role === '' ||
+					status_role?.role === null ||
+					status_role?.role === undefined
+				) {
+					redirectPath = '/account/role';
+				} else {
+					switch (status_role?.role) {
+						case 'admin':
+							redirectPath = '/admin/dashboard';
+							break;
+						case 'doctor':
+							redirectPath = '/doctor/dashboard';
+							break;
+						case 'user':
+							redirectPath = '/user/dashboard';
+							break;
+						default:
+							redirectPath = '/account/role';
+							break;
+					}
+				}
+			}
+		} catch (error) {
+			console.error('Error fetching user role: ', error);
+			redirectPath = '/account/role';
 		}
+	} catch (error) {
+		console.error('Error fetching user: ', error);
+		redirectPath = '/account/login';
 	}
+
+	redirect(redirectPath);
 }
 export async function login(formData: { email: string; password: string }) {
 	const supabase = createClient();
 	const data = loginSchema.safeParse(formData);
 
 	if (!data.success) throw new Error('Invalid email or password');
-	console.log('running');
 	const { error } = await supabase.auth.signInWithPassword({
 		email: data.data.email,
 		password: data.data.password,
 	});
 
-	console.log('running 2');
-
 	if (error) {
 		throw new Error(error.message);
 	}
-
-	console.log('running 3');
 
 	revalidatePath('/', 'layout');
 	return null;
@@ -197,47 +210,55 @@ export async function resetAndUpdatePassword(formData: FormData) {
 	redirect('/account/login');
 }
 
-// #TODO: Fix bug where the update doesn't apply to the database
 export const setRole = async (role: string) => {
 	const supabase = createClient();
-	const roleSchema = z
-		.object({
-			role: z.string(),
-		})
-		.parse({ role });
-	console.log(role);
+	let redirectPath = '';
 
-	const userRole = z
-		.enum(['admin', 'doctor', 'user', 'nurse'])
-		.parse(roleSchema.role);
+	try {
+		const roleSchema = z
+			.object({
+				role: z.string(),
+			})
+			.parse({ role });
 
-	if (!userRole) throw new Error('Invalid role');
-	const {
-		data: { user },
-	} = await supabase.auth.getUser();
-	if (!user) {
-		console.log(user);
-		redirect('/account/login');
+		const userRole = z
+			.enum(['admin', 'doctor', 'user', 'nurse'])
+			.parse(roleSchema.role);
+
+		if (!userRole) throw new Error('Invalid role');
+
+		const {
+			data: { user },
+		} = await supabase.auth.getUser();
+		if (!user) {
+			redirectPath = '/account/login';
+		} else {
+			const { error } = await supabase
+				.from('users')
+				.update({ role: role })
+				.eq('user_id', user?.id);
+			if (error) throw new Error(error.message);
+
+			revalidatePath('/', 'layout');
+			switch (role) {
+				case 'admin':
+					redirectPath = '/admin/dashboard';
+					break;
+				case 'doctor':
+					redirectPath = '/doctor/dashboard';
+					break;
+				case 'user':
+					redirectPath = '/user/dashboard';
+					break;
+				default:
+					redirectPath = '/account/role';
+					break;
+			}
+		}
+	} catch (error) {
+		console.error('Error setting role: ', error);
+		// Handle the error appropriately...
 	}
 
-	const { error } = await supabase
-		.from('users')
-		.update({ role: role })
-		.eq('user_id', user?.id);
-	if (error) throw new Error(error.message);
-	revalidatePath('/', 'layout');
-	switch (role) {
-		case 'admin':
-			redirect('/admin/dashboard');
-			break;
-		case 'doctor':
-			redirect('/doctor/dashboard');
-			break;
-		case 'user':
-			redirect('/user/dashboard');
-			break;
-		default:
-			redirect('/account/role');
-			break;
-	}
+	redirect(redirectPath);
 };

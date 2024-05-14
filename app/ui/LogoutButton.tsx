@@ -10,6 +10,8 @@ const LogoutButton = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	return (
 		<Button
+			variant={'destructive'}
+			disabled={isLoading}
 			onClick={async () => {
 				setIsLoading(true);
 				try {

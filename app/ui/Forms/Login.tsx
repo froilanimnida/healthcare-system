@@ -41,9 +41,16 @@ const Login = ({ className, ...props }: LoginFormProps) => {
 							toast.promise(login({ email, password }), {
 								loading: 'Logging In...',
 								success: () => {
-									//check user role
-									getUserRole();
-									return 'Logged In!';
+									toast.promise(getUserRole(), {
+										loading: 'Fetching User Role...',
+										success: () => {
+											return 'User Role Fetched!';
+										},
+										error: (err) => {
+											return err.message;
+										},
+									});
+									return 'Running additional checks...';
 								},
 								error: (err) => {
 									return err.message;

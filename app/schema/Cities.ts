@@ -1,0 +1,18 @@
+export const Cities = [
+	{ id: 1, name: 'Manila' },
+	{ id: 2, name: 'Quezon City' },
+	{ id: 3, name: 'Caloocan' },
+	{ id: 4, name: 'Las Piñas' },
+	{ id: 5, name: 'Makati' },
+	{ id: 6, name: 'Malabon' },
+	{ id: 7, name: 'Mandaluyong' },
+	{ id: 8, name: 'Marikina' },
+	{ id: 9, name: 'Muntinlupa' },
+	{ id: 10, name: 'Navotas' },
+	{ id: 11, name: 'Parañaque' },
+	{ id: 12, name: 'Pasay' },
+	{ id: 13, name: 'Pasig' },
+	{ id: 14, name: 'San Juan' },
+	{ id: 15, name: 'Taguig' },
+	{ id: 16, name: 'Valenzuela' },
+];
