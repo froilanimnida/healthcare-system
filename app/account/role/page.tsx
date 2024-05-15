@@ -1,5 +1,5 @@
 import React from 'react';
-import Role from '@/app/ui/Forms/Role';
+import Role from '@/app/account/role/RoleForm';
 
 const RolePage = () => {
 	return (

@@ -1,14 +1,15 @@
 'use client';
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { CalendarIcon } from '@radix-ui/react-icons';
 import { format } from 'date-fns';
+import { Icons } from '@/components/ui/icons';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
-import ReCAPTCHA from 'react-google-recaptcha';
+import { handleAppointment } from '@/app/appointment/appointmentAction';
 import FormCard from '@/components/FormCard';
 import {
 	Popover,
@@ -39,65 +40,33 @@ import { Input } from '@/components/ui/input';
 import { AppointmentFormSchema } from '@/app/schema/FormsSchema';
 import { Cities } from '@/app/schema/Cities';
 import { zodResolver } from '@hookform/resolvers/zod';
-import type { z } from 'zod';
-import FormItemChunk from '@/components/FormItemChunk';
+import { type z } from 'zod';
+import toast from 'react-hot-toast';
 const AppointmentForm = () => {
-	const [date, setDate] = useState<Date>();
+	const [appointmentDate, setAppointmentDate] = useState<Date>();
 	const [confirm, setConfirm] = useState(false);
-	const [captcha, setCaptcha] = useState<string | null>();
-	const recaptchaRef = useRef<ReCAPTCHA>(null);
+	const [submitting, setSubmitting] = useState(false);
 	const { executeRecaptcha } = useGoogleReCaptcha();
-	const handleSubmit = async (e: React.FormEvent) => {
-		e.preventDefault();
 
-		if (!executeRecaptcha) {
-			console.log('Not Available');
-			return;
-		}
-
-		const recaptchaToken = await executeRecaptcha('submit');
-
-		const response = await axios({
-			method: 'post',
-			url: '../../api/',
-			data: {
-				recaptchaToken,
-			},
-			headers: {
-				Accept: 'application/json, text/plain, */*',
-				'Content-Type': 'application/json',
-			},
-		});
-
-		console.log(response.data);
-		if (response?.data?.success === true) {
-			console.log('Recaptcha token verified');
-		} else {
-			console.error('Recaptcha token verification failed');
-		}
+	const defaultValues = {
+		first_name: '',
+		middle_name: '',
+		last_name: '',
+		age: 18,
+		city: '',
+		barangay: '',
+		zip_code: 123456789,
+		home_address_line_1: '',
+		home_address_line_2: '',
+		email: '',
+		mobile_number: '',
+		alternate_mobile_number: '',
+		alternate_email: '',
+		date_of_birth: '',
+		sex: '',
+		service: '',
+		date_of_appointment: new Date(),
 	};
-	const form = useForm<z.infer<typeof AppointmentFormSchema>>({
-		resolver: zodResolver(AppointmentFormSchema),
-		defaultValues: {
-			first_name: '',
-			middle_name: '',
-			last_name: '',
-			province: '',
-			city: '',
-			house_number: '',
-			street: '',
-			barangay: '',
-			zip_code: '',
-			date_of_birth: '',
-			email: '',
-			mobile_number: '',
-			sex: '',
-			senior_or_pwd: false,
-			department: '',
-			doctor: '',
-		},
-	});
-
 	const AppointmentFormFields = [
 		{
 			name: 'first_name',
@@ -124,12 +93,6 @@ const AppointmentForm = () => {
 			placeholder: '18',
 		},
 		{
-			name: 'city',
-			type: 'text',
-			label: 'City',
-			placeholder: 'Quezon City',
-		},
-		{
 			name: 'barangay',
 			type: 'text',
 			label: 'Barangay',
@@ -142,13 +105,13 @@ const AppointmentForm = () => {
 			placeholder: '1101',
 		},
 		{
-			name: 'Home Address Line 1',
+			name: 'home_address_line_1',
 			type: 'text',
 			label: 'Home Address Line 1',
 			placeholder: '123 East Avenue',
 		},
 		{
-			name: 'Home Address Line 2',
+			name: 'home_address_line_2',
 			type: 'text',
 			label: 'Home Address Line 2',
 			placeholder: 'Diliman',
@@ -178,174 +141,277 @@ const AppointmentForm = () => {
 			placeholder: 'Alternate Email',
 		},
 	];
-	const onReCAPTCHAChange = (captchaCode: string) => {
-		console.log('Captcha verified');
 
-		if (!captchaCode) {
+	const resetFormField = () => {
+		appointmentForm.reset(defaultValues);
+		setAppointmentDate(new Date());
+		setConfirm(false);
+	};
+	const appointmentForm = useForm<z.infer<typeof AppointmentFormSchema>>({
+		resolver: zodResolver(AppointmentFormSchema),
+		defaultValues,
+	});
+
+	const onSubmitAppointment = async (
+		values: z.infer<typeof AppointmentFormSchema>,
+	) => {
+		setSubmitting(true);
+		console.log(values);
+		console.log('Form Submitted');
+		if (!executeRecaptcha) {
+			console.log('not available to execute recaptcha');
 			return;
 		}
 
-		console.log('Captcha code:', captchaCode);
+		const gRecaptchaToken = await executeRecaptcha('inquirySubmit');
+
+		const response = await axios({
+			method: 'post',
+			url: '../../api/',
+			data: {
+				gRecaptchaToken,
+			},
+			headers: {
+				Accept: 'application/json, text/plain, */*',
+				'Content-Type': 'application/json',
+			},
+		});
+
+		if (response?.data?.success === true) {
+			toast.promise(handleAppointment(values), {
+				loading: 'Submitting Appointment...',
+				success: () => {
+					return 'Appointment Submitted!';
+				},
+				error: (err) => {
+					return err.message;
+				},
+			});
+			setSubmitting(false);
+		} else toast.error('Captcha Verification Failed.');
 	};
-	const asyncScriptOnLoad = () => {
-		console.log('Google recaptcha loaded just fine');
-	};
+
 	return (
 		<div className='w-full items-center justify-center flex'>
 			<FormCard
 				title='Book and Appointment'
 				description='Please fill out the form below to book an appointment.'>
-				<Form {...form}>
-					<form action={''}>
+				<Form {...appointmentForm}>
+					<form onSubmit={appointmentForm.handleSubmit(onSubmitAppointment)}>
 						<CardContent className='gap-3 md:gap-5 lg:gap-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
-							{AppointmentFormFields.map(({ name, label, placeholder }) => (
-								<FormField
-									key={name}
-									name={name}
-									render={({ field }) => (
-										<FormItem>
-											<FormLabel>{label}</FormLabel>
+							{AppointmentFormFields.map(
+								({ name, label, placeholder, type }) => (
+									<FormField
+										key={name}
+										name={name}
+										render={({ field, fieldState: { error } }) => (
+											<FormItem>
+												<FormLabel>{label}</FormLabel>
+												<FormControl>
+													<Input
+														required
+														placeholder={placeholder}
+														{...field}
+														type={type}
+														value={
+															field.value === 'number'
+																? Number(field.value)
+																: field.value
+														}
+														onChange={(e) => {
+															if (type === 'number') {
+																field.onChange(Number(e.target.value));
+															} else {
+																field.onChange(e.target.value);
+															}
+														}}
+													/>
+												</FormControl>
+												{error && <FormDescription></FormDescription>}
+												<FormMessage />
+											</FormItem>
+										)}
+									/>
+								),
+							)}
+
+							<FormField
+								name='date_of_birth'
+								render={({ field, fieldState: { error } }) => (
+									<FormItem>
+										<FormLabel>Date of Birth</FormLabel>
+										<FormControl>
+											<Input
+												required
+												type='date'
+												{...field}
+											/>
+										</FormControl>
+										{error && <FormDescription></FormDescription>}
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
+
+							<FormField
+								control={appointmentForm.control}
+								name='city'
+								render={({ field, fieldState: { error } }) => (
+									<FormItem>
+										<FormLabel>City</FormLabel>
+										<Select
+											required
+											onValueChange={field.onChange}>
 											<FormControl>
-												<Input
-													required
-													placeholder={placeholder}
-													{...field}
-												/>
+												<SelectTrigger>
+													<SelectValue placeholder='Select City' />
+												</SelectTrigger>
 											</FormControl>
-											<FormDescription>
-												Enter your {label.toLowerCase()}.
-											</FormDescription>
-											<FormMessage />
-										</FormItem>
-									)}
-								/>
-							))}
+											<SelectContent>
+												<SelectGroup>
+													<SelectLabel>City</SelectLabel>
+													{Cities.map((city) => (
+														<SelectItem
+															key={city.id}
+															value={city.name}>
+															{city.name}
+														</SelectItem>
+													))}
+												</SelectGroup>
+											</SelectContent>
+										</Select>
+										{error && <FormDescription></FormDescription>}
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
 
-							<FormItemChunk
-								label='Date of Birth'
-								description='Select your Date of Birth'>
-								<Popover>
-									<PopoverTrigger asChild>
-										<Button
-											variant={'outline'}
-											className={cn(
-												'w-full justify-start text-left font-normal',
-												!date && 'text-muted-foreground',
-											)}>
-											<CalendarIcon className='mr-2 h-4 w-4' />
-											{date ? format(date, 'PPP') : <span>Pick a date</span>}
-										</Button>
-									</PopoverTrigger>
-									<PopoverContent className='w-auto p-0'>
-										<Calendar
-											mode='single'
-											selected={date}
-											onSelect={setDate}
-											initialFocus
-										/>
-									</PopoverContent>
-								</Popover>
-							</FormItemChunk>
+							<FormField
+								name='sex'
+								control={appointmentForm.control}
+								render={({ field, fieldState: { error } }) => (
+									<FormItem>
+										<FormLabel>Sex</FormLabel>
+										<FormControl>
+											<Select
+												onValueChange={field.onChange}
+												required>
+												<SelectTrigger>
+													<SelectValue placeholder='Select your sex' />
+												</SelectTrigger>
+												<SelectContent>
+													<SelectGroup>
+														<SelectLabel>Sex</SelectLabel>
+														<SelectItem value='male'>Male</SelectItem>
+														<SelectItem value='female'>Female</SelectItem>
+														<SelectItem value='other'>Other</SelectItem>
+													</SelectGroup>
+												</SelectContent>
+											</Select>
+										</FormControl>
+										{error && <FormDescription></FormDescription>}
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
 
-							<FormItemChunk
-								label='City'
-								description='Select City'>
-								<Select
-									name='city'
-									required>
-									<SelectTrigger>
-										<SelectValue placeholder='Select City' />
-									</SelectTrigger>
-									<SelectContent>
-										<SelectGroup>
-											<SelectLabel>City</SelectLabel>
-											{Cities.map((city) => (
-												<SelectItem
-													key={city.id}
-													value={city.name}>
-													{city.name}
-												</SelectItem>
-											))}
-										</SelectGroup>
-									</SelectContent>
-								</Select>
-							</FormItemChunk>
+							<FormField
+								control={appointmentForm.control}
+								name='services'
+								render={({ field, fieldState: { error } }) => (
+									<FormItem>
+										<FormLabel>Service</FormLabel>
+										<FormControl>
+											<Select
+												required
+												onValueChange={field.onChange}>
+												<SelectTrigger>
+													<SelectValue placeholder='Select Service' />
+												</SelectTrigger>
+												<SelectContent>
+													<SelectGroup>
+														<SelectLabel>Service</SelectLabel>
+														<SelectItem value='prenatal'>Prenatal</SelectItem>
+														<SelectItem value='vaginal_cleaning'>
+															Vaginal Cleaning
+														</SelectItem>
+														<SelectItem value='dental'>Dental</SelectItem>
+														<SelectItem value='vaccination_for_babies'>
+															Vaccination for Babies
+														</SelectItem>
+														<SelectItem value='maintenance_for_those_in_need'>
+															Maintenance for those in need
+														</SelectItem>
+														<SelectItem value='hiv_testing'>
+															HIV Testing
+														</SelectItem>
+														<SelectItem value='tb_dots'>TB Dots</SelectItem>
+													</SelectGroup>
+												</SelectContent>
+											</Select>
+										</FormControl>
+										{error && <FormDescription></FormDescription>}
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
 
-							<FormItemChunk
-								label='Sex'
-								description='Select sex.'>
-								<Select required>
-									<SelectTrigger>
-										<SelectValue placeholder='Select your sex' />
-									</SelectTrigger>
-									<SelectContent>
-										<SelectGroup>
-											<SelectLabel>Sex</SelectLabel>
-											<SelectItem value='male'>Male</SelectItem>
-											<SelectItem value='female'>Female</SelectItem>
-											<SelectItem value='other'>Other</SelectItem>
-										</SelectGroup>
-									</SelectContent>
-								</Select>
-							</FormItemChunk>
-
-							<FormItemChunk
-								label='Date of Appointment'
-								description='Select your appointment date.'>
-								<Popover>
-									<PopoverTrigger asChild>
-										<Button
-											variant={'outline'}
-											className={cn(
-												'w-full justify-start text-left font-normal',
-												!date && 'text-muted-foreground',
-											)}>
-											<CalendarIcon className='mr-2 h-4 w-4' />
-											{date ? format(date, 'PPP') : <span>Pick a date</span>}
-										</Button>
-									</PopoverTrigger>
-									<PopoverContent className='w-auto p-0'>
-										<Calendar
-											mode='single'
-											selected={date}
-											onSelect={setDate}
-											initialFocus
-										/>
-									</PopoverContent>
-								</Popover>
-							</FormItemChunk>
-
-							<FormItemChunk
-								label='Services'
-								description='Which service you want to have an appointment to?'>
-								<Select
-									required
-									onValueChange={(value) => console.log(value)}>
-									<SelectTrigger>
-										<SelectValue placeholder='Select Service' />
-									</SelectTrigger>
-									<SelectContent>
-										<SelectGroup>
-											<SelectLabel>Service</SelectLabel>
-											<SelectItem value='prenatal'>Prenatal</SelectItem>
-											<SelectItem value='vaginal_cleaning'>
-												Vaginal Cleaning
-											</SelectItem>
-											<SelectItem value='dental'>Dental</SelectItem>
-											<SelectItem value='vaccination_for_babies'>
-												Vaccination for Babies
-											</SelectItem>
-											<SelectItem value='maintenance_for_those_in_need'>
-												Maintenance for those in need
-											</SelectItem>
-											<SelectItem value='hiv_testing'>HIV Testing</SelectItem>
-											<SelectItem value='tb_dots'>TB Dots</SelectItem>
-										</SelectGroup>
-									</SelectContent>
-								</Select>
-							</FormItemChunk>
+							<FormField
+								name='date_of_appointment'
+								render={({ field, fieldState: { error } }) => (
+									<FormItem>
+										<FormLabel>Date of Appointment</FormLabel>
+										<FormControl>
+											<Popover>
+												<PopoverTrigger asChild>
+													<Button
+														variant={'outline'}
+														className={cn(
+															'w-full justify-start text-left font-normal',
+															!appointmentDate && 'text-muted-foreground',
+														)}>
+														<CalendarIcon className='mr-2 h-4 w-4' />
+														{appointmentDate ? (
+															format(appointmentDate, 'PPP')
+														) : (
+															<span>Pick a date</span>
+														)}
+													</Button>
+												</PopoverTrigger>
+												<PopoverContent className='w-auto p-0'>
+													<Calendar
+														disabled={(date) => {
+															const isPastDate =
+																date <= new Date() ||
+																date <= new Date('1900-01-01');
+															const isWeekend =
+																date.getDay() === 0 || date.getDay() === 6;
+															return isPastDate || isWeekend;
+														}}
+														selected={appointmentDate}
+														mode='single'
+														onSelect={(date) => {
+															setAppointmentDate(date);
+															const event = {
+																target: {
+																	name: field.name,
+																	value: date,
+																},
+															};
+															field.onChange(event);
+														}}
+														initialFocus
+													/>
+												</PopoverContent>
+											</Popover>
+										</FormControl>
+										{error && <FormDescription></FormDescription>}
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
 						</CardContent>
-						<CardFooter className='flex justify-between items-center w-full'>
+						<CardFooter className='flex gap-5 md:gap-0 justify-between items-center flex-col md:flex-row w-full'>
 							<div className='flex items-center space-x-2'>
 								<Checkbox
 									required
@@ -361,17 +427,27 @@ const AppointmentForm = () => {
 									correct.
 								</label>
 							</div>
-							<Button
-								variant={'outline'}
-								type='reset'>
-								Reset
-							</Button>
-							<Button
-								onClick={handleSubmit}
-								disabled={!confirm}
-								type='submit'>
-								Submit
-							</Button>
+							<div
+								className={`flex gap-5 items-center justify-center md:justify-end w-full md:w-1/6 flex-col md:flex-row space-x-2`}>
+								<Button
+									type='submit'
+									disabled={submitting || !confirm}>
+									{submitting && (
+										<Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
+									)}
+									Submit
+								</Button>
+								<Button
+									onClick={resetFormField}
+									variant={'outline'}
+									type='reset'
+									disabled={submitting}>
+									{submitting && (
+										<Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
+									)}
+									Reset
+								</Button>
+							</div>
 						</CardFooter>
 					</form>
 				</Form>

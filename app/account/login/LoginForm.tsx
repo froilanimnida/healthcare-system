@@ -21,8 +21,32 @@ import {
 interface LoginFormProps {
 	className?: string;
 }
+
 const Login = ({ className, ...props }: LoginFormProps) => {
 	const [isLoading, setIsLoading] = useState(false);
+	const loginAction = async (formData: FormData) => {
+		const email = formData.get('email') as string;
+		const password = formData.get('password') as string;
+		setIsLoading(true);
+		toast.promise(login({ email, password }), {
+			loading: 'Logging In...',
+			success: () => {
+				toast.promise(getUserRole(), {
+					loading: 'Fetching User Role...',
+					success: () => {
+						return 'User Role Fetched!';
+					},
+					error: (err) => {
+						return err.message;
+					},
+				});
+				return 'Running additional checks...';
+			},
+			error: (err) => {
+				return err.message;
+			},
+		});
+	};
 	return (
 		<div
 			className={cn('grid gap-6 w-full', className)}
@@ -32,38 +56,7 @@ const Login = ({ className, ...props }: LoginFormProps) => {
 					<CardTitle>Login</CardTitle>
 					<CardDescription>Log in to continue</CardDescription>
 				</CardHeader>
-				<form
-					action={async (formData: FormData) => {
-						setIsLoading(true);
-						try {
-							const email = formData.get('email') as string;
-							const password = formData.get('password') as string;
-							toast.promise(login({ email, password }), {
-								loading: 'Logging In...',
-								success: () => {
-									toast.promise(getUserRole(), {
-										loading: 'Fetching User Role...',
-										success: () => {
-											return 'User Role Fetched!';
-										},
-										error: (err) => {
-											return err.message;
-										},
-									});
-									return 'Running additional checks...';
-								},
-								error: (err) => {
-									return err.message;
-								},
-							});
-						} catch (error: any) {
-							setIsLoading(false);
-							toast.error('Something went wrong.');
-							console.error(error);
-						} finally {
-							setIsLoading(false);
-						}
-					}}>
+				<form action={loginAction}>
 					<CardContent className='flex flex-col gap-5 justify-center items-center w-full'>
 						<div className='grid gap-2'>
 							<div className='grid gap-1'>

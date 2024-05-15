@@ -14,9 +14,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-	// #TODO:Change Client Name
-	title: 'East Avenue Medical Center',
-	description: 'East Avenue Medical Center Website and Booking System',
+	title: 'Floriko Birthing Home',
+	description: 'Floriko Birthing Home Website and Booking System',
 };
 
 export default function RootLayout({

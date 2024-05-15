@@ -1,5 +1,8 @@
+'use server';
+import { createClient } from '@/utils/supabase/server';
 import { z, ZodType } from 'zod';
 import { format } from 'date-fns';
+
 interface FormData {
 	first_name: string;
 	middle_name: string;
@@ -19,7 +22,8 @@ interface FormData {
 	date_of_appointment: Date;
 	services: string;
 }
-export const AppointmentFormSchema: ZodType<FormData> = z.object({
+
+const AppointmentSchema = z.object({
 	first_name: z
 		.string({
 			required_error: 'First name is required',
@@ -119,3 +123,25 @@ export const AppointmentFormSchema: ZodType<FormData> = z.object({
 		{ message: 'Appointment date must be in the future' },
 	),
 });
+
+export async function handleAppointment(formData: FormData) {
+	const supabase = createClient();
+
+	const result = AppointmentSchema.safeParse(formData);
+
+	if (!result.success) {
+		console.error(result.error);
+		return;
+	}
+
+	const resultData = result.data;
+
+	// simulaate the slow network
+	await new Promise((resolve) => setTimeout(resolve, 5000));
+	// desctructure the resultData
+	const { date_of_appointment, ...data } = resultData;
+
+	// format the date
+	const formattedDate = format(date_of_appointment, 'yyyy-MM-dd');
+	console.log(formattedDate);
+}

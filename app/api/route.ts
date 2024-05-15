@@ -2,16 +2,19 @@ import { NextResponse } from 'next/server';
 import axios from 'axios';
 
 export async function POST(request: Request, response: Response) {
-	const secretKeu = process.env.RECAPTCHA_SECRET_KEY;
+	const secretKey = process.env.RECAPTCHA_SECRET_KEY;
+
 	const postData = await request.json();
-	const { recaptchaToken } = postData;
+
+	const { gRecaptchaToken } = postData;
+
 	let res;
 
-	const formData = `secret=${secretKeu}&response=${recaptchaToken}`;
+	const formData = `secret=${secretKey}&response=${gRecaptchaToken}`;
 
 	try {
 		res = await axios.post(
-			`https://www.google.com/recaptcha/api/siteverify`,
+			'https://www.google.com/recaptcha/api/siteverify',
 			formData,
 			{
 				headers: {
@@ -19,19 +22,16 @@ export async function POST(request: Request, response: Response) {
 				},
 			},
 		);
-	} catch (error) {
-		console.error(error);
-		return NextResponse.error();
+	} catch (e) {
+		return NextResponse.json({ success: false });
 	}
 
-	if (res.data.success && res.data.score > 0.5 && res) {
-		console.log('Recaptcha token verified');
+	if (res && res.data?.success && res.data?.score > 0.5) {
 		return NextResponse.json({
 			success: true,
 			score: res.data.score,
 		});
 	} else {
-		console.error('Recaptcha token verification failed');
-		return NextResponse.error();
+		return NextResponse.json({ success: false });
 	}
 }
