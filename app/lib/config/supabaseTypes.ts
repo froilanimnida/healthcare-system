@@ -9,99 +9,85 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      appointments_anon: {
+      appointments: {
         Row: {
+          alternate_email: string
+          alternate_mobile_number: number
           appointment_id: number
-          barangay: string
           city: string
+          date_of_appointment: string
           date_of_birth: string
           department: string
-          doctor_uuid: string
-          email: string
           first_name: string
-          house_number: number
+          home_address_line_1: string
+          home_address_line_2: string
+          house_number: string
           last_name: string
           middle_name: string
-          mobile_number: string
+          mobile_number: number
           province: string
+          service: string
           sex: string
-          street: string
           zip_code: number
         }
         Insert: {
+          alternate_email: string
+          alternate_mobile_number: number
           appointment_id?: number
-          barangay: string
           city: string
+          date_of_appointment: string
           date_of_birth: string
           department: string
-          doctor_uuid?: string
-          email: string
           first_name: string
-          house_number: number
+          home_address_line_1: string
+          home_address_line_2: string
+          house_number: string
           last_name: string
           middle_name: string
-          mobile_number: string
+          mobile_number: number
           province: string
+          service: string
           sex: string
-          street: string
           zip_code: number
         }
         Update: {
+          alternate_email?: string
+          alternate_mobile_number?: number
           appointment_id?: number
-          barangay?: string
           city?: string
+          date_of_appointment?: string
           date_of_birth?: string
           department?: string
-          doctor_uuid?: string
-          email?: string
           first_name?: string
-          house_number?: number
+          home_address_line_1?: string
+          home_address_line_2?: string
+          house_number?: string
           last_name?: string
           middle_name?: string
-          mobile_number?: string
+          mobile_number?: number
           province?: string
+          service?: string
           sex?: string
-          street?: string
           zip_code?: number
         }
-        Relationships: [
-          {
-            foreignKeyName: "appointments_anon_doctor_uuid_fkey"
-            columns: ["doctor_uuid"]
-            isOneToOne: false
-            referencedRelation: "doctors"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
-      doctors: {
+      doctors_info: {
         Row: {
-          board_certifications: string | null
-          experience: number | null
+          department: string | null
           id: string
-          medical_degree: string | null
-          medical_license_number: string | null
-          speciality: string | null
         }
         Insert: {
-          board_certifications?: string | null
-          experience?: number | null
-          id?: string
-          medical_degree?: string | null
-          medical_license_number?: string | null
-          speciality?: string | null
+          department?: string | null
+          id: string
         }
         Update: {
-          board_certifications?: string | null
-          experience?: number | null
+          department?: string | null
           id?: string
-          medical_degree?: string | null
-          medical_license_number?: string | null
-          speciality?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "doctors_id_fkey"
+            foreignKeyName: "doctors_info_id_fkey"
             columns: ["id"]
             isOneToOne: true
             referencedRelation: "users"
@@ -121,6 +107,7 @@ export type Database = {
           middle_name: string | null
           role: string | null
           user_id: string
+          verified_user: boolean
         }
         Insert: {
           address?: string | null
@@ -133,6 +120,7 @@ export type Database = {
           middle_name?: string | null
           role?: string | null
           user_id: string
+          verified_user?: boolean
         }
         Update: {
           address?: string | null
@@ -145,6 +133,7 @@ export type Database = {
           middle_name?: string | null
           role?: string | null
           user_id?: string
+          verified_user?: boolean
         }
         Relationships: []
       }
