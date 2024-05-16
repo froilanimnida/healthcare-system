@@ -14,8 +14,8 @@ const NavigationBarLandingPage = () => {
 		{ name: 'Contact', href: '/contact', icon: <ContactIcon /> },
 	];
 	const path = usePathname();
-	const pathList = ['/account', '/user', '/admin', '/nurse', '/doctor'];
-	const isPath = pathList.some((p) => path.includes(p));
+	const pathList = ['/account', '/user', '/admin', '/doctor'];
+	const isPath = pathList.some((p) => path.startsWith(p));
 	return (
 		<div
 			className={`${

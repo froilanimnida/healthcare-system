@@ -1,5 +1,5 @@
-'use client';
-import React, { useEffect } from 'react';
+import React, { Suspense } from 'react';
+import Skeleton from '@/components/Skeletons/Skeleton';
 import {
 	Card,
 	CardDescription,
@@ -44,79 +44,82 @@ import {
 	TableHeader,
 	TableRow,
 } from '@/components/ui/table';
-import { getAllAppointments } from '@/actions/Admin/getActions';
-import toast from 'react-hot-toast';
+import {
+	getAllAppointments,
+	getSomeAppointments,
+} from '@/actions/Admin/getActions';
 
 type Appointment = {
-	appointment_id: number;
+	appointment_id: string;
 	first_name: string;
 	middle_name: string;
 	last_name: string;
-	province: string;
-	city: string;
-	house_number: string;
-	home_address_line_1: string;
-	home_address_line_2: string;
-	zip_code: number;
-	date_of_birth: string;
-	alternate_mobile_number: number;
-	mobile_number: number;
-	alternate_email: string;
-	department: string;
-	sex: string;
 	service: string;
 	date_of_appointment: string;
+	email: string;
+	mobile_number: number;
 };
 
-const AppointmentTable = () => {
-	useEffect(() => {
-		getAppointments();
-	}, []);
-	var getAppointments = async () => {
-		toast.promise(getAllAppointments(), {
-			loading: 'Loading appointments',
-			success: (data) => {
-				console.log(data);
-				return 'Appointments loaded';
-			},
-			error: (error) => {
-				console.error('Error fetching appointments: ', error);
-				return 'Error fetching appointments';
-			},
-		});
-	};
+export const revalidate = 1;
+interface AppointmentTableProps {
+	all: boolean;
+}
+
+const AppointmentTable: React.FC<AppointmentTableProps> = async ({ all }) => {
+	var someAppointments = all
+		? (await getAllAppointments()) ?? []
+		: (await getSomeAppointments()) ?? [];
+	const headers = [
+		{ id: 1, name: 'Appointment ID' },
+		{ id: 2, name: 'First Name' },
+		{ id: 3, name: 'Middle Name' },
+		{ id: 4, name: 'Last Name' },
+		{ id: 5, name: 'Service' },
+		{ id: 6, name: 'Date of Appointment' },
+		{ id: 7, name: 'Email' },
+		{ id: 8, name: 'Mobile Number' },
+	];
 
 	return (
-		<Card className='w-1/2'>
+		<Card className='w-full'>
 			<CardHeader>
-				<CardTitle>Appointments</CardTitle>
+				<CardTitle>
+					{!all ? 'Overview list of Appointments' : 'All appointments'}
+				</CardTitle>
 				<CardDescription>These are the appointments</CardDescription>
 			</CardHeader>
-			{/* <div className='w-full'>
+			<div className='w-full'>
 				<div className='flex items-center py-4'></div>
 				<div>
 					<Table>
-						<TableHead>
-							{headers.map((header) => (
-								<TableCell key={header.id}>{header.name}</TableCell>
-							))}
-						</TableHead>
-						<TableBody>
+						<TableHeader>
 							<TableRow>
-								<TableCell>1</TableCell>
-								<TableCell>John</TableCell>
-								<TableCell>Smith</TableCell>
-								<TableCell>Doe</TableCell>
-								<TableCell>2022-02-02</TableCell>
-								<TableCell>Cardiology</TableCell>
-								<TableCell>Dr. Jane Doe</TableCell>
-								<TableCell>someone@gmail.com</TableCell>
-								<TableCell>09060162213</TableCell>
+								{headers.map((header) => (
+									<TableHead key={header.id}>{header.name}</TableHead>
+								))}
 							</TableRow>
+						</TableHeader>
+						<TableBody>
+							<Suspense fallback={<Skeleton />}>
+								{someAppointments.map((appointment: Appointment) => {
+									return (
+										<TableRow key={appointment.appointment_id}>
+											<TableCell>{appointment.appointment_id}</TableCell>
+											<TableCell>{appointment.first_name}</TableCell>
+											<TableCell>{appointment.middle_name}</TableCell>
+											<TableCell>{appointment.last_name}</TableCell>
+											<TableCell>{appointment.service}</TableCell>
+											<TableCell>{appointment.date_of_appointment}</TableCell>
+											<TableCell>{appointment.email}</TableCell>
+											<TableCell>+639 {appointment.mobile_number}</TableCell>
+										</TableRow>
+									);
+								})}
+							</Suspense>
 						</TableBody>
 					</Table>
 				</div>
-			</div> */}
+			</div>
 		</Card>
 	);
 };

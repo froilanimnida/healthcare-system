@@ -11,8 +11,8 @@ export const metadata: Metadata = {
 const AdminDashboardPage = () => {
 	return (
 		<div className='p-5'>
-			<Admin />
-			<AppointmentTable />
+			{/* <Admin /> */}
+			<AppointmentTable all={false} />
 		</div>
 	);
 };

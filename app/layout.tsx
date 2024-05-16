@@ -14,8 +14,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-	title: 'Floriko Birthing Home',
-	description: 'Floriko Birthing Home Website and Booking System',
+	title: 'Nora Birthing Care Clinic',
+	description: 'Nora Birthing Care Clinic Website and Booking System',
 };
 
 export default function RootLayout({

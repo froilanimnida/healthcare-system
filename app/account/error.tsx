@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useEffect } from 'react';
-import NotFound from './../../public/images/404.png';
+import NotFound from './../../public/images/404.webp';
 
 export default function Error({
 	error,

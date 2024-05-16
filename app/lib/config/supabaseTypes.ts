@@ -11,13 +11,13 @@ export type Database = {
     Tables: {
       appointments: {
         Row: {
-          alternate_email: string
-          alternate_mobile_number: number
-          appointment_id: number
+          alternate_email: string | null
+          alternate_mobile_number: number | null
+          appointment_id: string
           city: string
           date_of_appointment: string
           date_of_birth: string
-          department: string
+          email: string
           first_name: string
           home_address_line_1: string
           home_address_line_2: string
@@ -31,13 +31,13 @@ export type Database = {
           zip_code: number
         }
         Insert: {
-          alternate_email: string
-          alternate_mobile_number: number
-          appointment_id?: number
+          alternate_email?: string | null
+          alternate_mobile_number?: number | null
+          appointment_id?: string
           city: string
           date_of_appointment: string
           date_of_birth: string
-          department: string
+          email: string
           first_name: string
           home_address_line_1: string
           home_address_line_2: string
@@ -51,13 +51,13 @@ export type Database = {
           zip_code: number
         }
         Update: {
-          alternate_email?: string
-          alternate_mobile_number?: number
-          appointment_id?: number
+          alternate_email?: string | null
+          alternate_mobile_number?: number | null
+          appointment_id?: string
           city?: string
           date_of_appointment?: string
           date_of_birth?: string
-          department?: string
+          email?: string
           first_name?: string
           home_address_line_1?: string
           home_address_line_2?: string
@@ -71,29 +71,6 @@ export type Database = {
           zip_code?: number
         }
         Relationships: []
-      }
-      doctors_info: {
-        Row: {
-          department: string | null
-          id: string
-        }
-        Insert: {
-          department?: string | null
-          id: string
-        }
-        Update: {
-          department?: string | null
-          id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "doctors_info_id_fkey"
-            columns: ["id"]
-            isOneToOne: true
-            referencedRelation: "users"
-            referencedColumns: ["user_id"]
-          },
-        ]
       }
       users: {
         Row: {

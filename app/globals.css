@@ -47,6 +47,23 @@
 		--input: 217.2 32.6% 17.5%;
 		--ring: 224.3 76.3% 48%;
 	}
+
+	* {
+		@apply border-border;
+	}
+
+	body {
+		@apply bg-gradient-to-br from-zinc-50 to-pink-50 text-foreground;
+	}
+
+	.dark body {
+		background: linear-gradient(
+			to bottom right,
+			var(--background),
+			var(--card)
+		);
+		color: var(--foreground);
+	}
 }
 
 @layer base {
@@ -55,5 +72,14 @@
 	}
 	body {
 		@apply bg-gradient-to-br from-zinc-50 to-pink-50 text-foreground;
+	}
+
+	.dark body {
+		background: linear-gradient(
+			to bottom right,
+			var(--background),
+			var(--card)
+		);
+		color: var(--foreground);
 	}
 }
