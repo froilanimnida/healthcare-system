@@ -7,30 +7,32 @@ import StaticImageThree from '@/public/images/hero/static-blog-image-3.jpg';
 import { stat } from 'fs/promises';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 
+// change the blogs to maternal health blogs
 const OurBlogs = () => {
 	const staticCardContent = [
 		{
 			thumbnails: StaticImageOne,
 			date: 'May 12, 2021',
-			title: 'How to maintain good health',
+			title: 'How to take care of your baby',
 			description:
-				'Explore practical tips for a healthier lifestyle. Understand the importance of balanced nutrition, regular exercise, and adequate sleep.',
+				'Learn about the essentials of baby care. Discover tips on how to keep your baby healthy and happy.',
 			link: '/how-to-maintain-good-health',
 		},
 		{
 			thumbnails: StaticImageTwo,
 			date: 'June 15, 2021',
-			title: 'The importance of regular exercise',
+			title:
+				'Importance of regular exercise and physical activity to your maternal health',
 			description:
-				'Discover the benefits of consistent physical activity. Learn how regular exercise can improve your physical health and mental well-being.',
+				'Understand the benefits of regular exercise and physical activity to your maternal health. Learn how to stay fit and healthy during pregnancy.',
 			link: '/importance-of-regular-exercise',
 		},
 		{
 			thumbnails: StaticImageThree,
 			date: 'July 20, 2021',
-			title: 'Healthy eating habits',
+			title: 'Healthy eating and balanced diet for maternal health',
 			description:
-				'Learn about nutritious foods and balanced diets. Get insights into how healthy eating habits can boost your immunity and overall health.',
+				'Learn about the importance of healthy eating and balanced diet to your maternal health. Discover the essentials of a healthy diet.',
 			link: '/healthy-eating-habits',
 		},
 	];

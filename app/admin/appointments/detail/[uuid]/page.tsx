@@ -2,21 +2,6 @@ import React, { Suspense } from 'react';
 import { SkeletonCard } from '@/components/Skeletons/SkeletonCard';
 import { getAppointmentDetails } from '@/actions/Admin/getActions';
 import { Button } from '@/components/ui/button';
-import toast from 'react-hot-toast';
-import {
-	Popover,
-	PopoverContent,
-	PopoverTrigger,
-} from '@/components/ui/popover';
-import {
-	Form,
-	FormControl,
-	FormDescription,
-	FormField,
-	FormItem,
-	FormLabel,
-	FormMessage,
-} from '@/components/ui/form';
 import {
 	Card,
 	CardContent,
@@ -27,14 +12,7 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from '@/components/ui/select';
-import { Tables } from '@/app/lib/config/supabaseTypes';
+import Link from 'next/link';
 
 type Appointment = {
 	appointment_uuid: string;
@@ -63,51 +41,55 @@ const DetailedAppointmentOverviewPage = async ({
 	params: { uuid: string };
 }) => {
 	var appointmentDetails = (await getAppointmentDetails(params.uuid)) ?? {};
+	const keys = Object.keys(appointmentDetails);
 
 	return (
 		<>
 			<div className='w-full p-5'>
 				<Card className='w-full'>
 					<CardHeader>
-						<CardTitle>Create project</CardTitle>
+						<CardTitle>
+							Detailed view of appointment: {appointmentDetails.appointment_id}
+						</CardTitle>
 						<CardDescription>
-							Deploy your new project in one-click.
+							Here you can view the details of the appointment and make changes
+							on the date of appointment.
 						</CardDescription>
 					</CardHeader>
 					<CardContent>
-						<form>
-							<Suspense fallback={<SkeletonCard />}>
-								<div className='grid w-full items-center gap-4'>
-									<div className='flex flex-col space-y-1.5'>
-										<Input
-											disabled
-											defaultValue={appointmentDetails.first_name}
-										/>
-										<Input
-											disabled
-											defaultValue={appointmentDetails.middle_name}
-										/>
-										<Input
-											disabled
-											defaultValue={appointmentDetails.last_name}
-										/>
-										<Input
-											disabled
-											defaultValue={appointmentDetails.service}
-										/>
-										<Input
-											defaultValue={appointmentDetails.date_of_appointment}
-										/>
-										<Input defaultValue={appointmentDetails.email} />
-										<Input defaultValue={appointmentDetails.mobile_number} />
-									</div>
+						<Suspense fallback={<SkeletonCard />}>
+							<div className='w-full'>
+								<div className='grid w-full items-center grids-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 space-y-1.5'>
+									{keys.map((key) => (
+										<div key={key}>
+											<Label htmlFor={key}>
+												{key
+													.replace(/_/g, ' ')
+													.replace(/([A-Z])/g, ' $1')
+													.replace(/^./, (char) => char.toUpperCase())
+													.toUpperCase()}
+											</Label>
+											<Input
+												key={key}
+												id={key}
+												disabled
+												defaultValue={
+													appointmentDetails[key as keyof Appointment]
+												}
+											/>
+										</div>
+									))}
 								</div>
-							</Suspense>
-						</form>
+							</div>
+						</Suspense>
+
+						{/* <CalendarNew /> */}
 					</CardContent>
 					<CardFooter className='flex justify-between'>
-						<Button variant='outline'>Cancel</Button>
-						<Button>Deploy</Button>
+						<Button variant='outline'>
+							<Link href='/admin/appointments'>Back</Link>
+						</Button>
+						<Button>Save these changes</Button>
 					</CardFooter>
 				</Card>
 			</div>
