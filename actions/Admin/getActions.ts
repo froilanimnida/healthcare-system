@@ -16,11 +16,8 @@ export async function getAllAppointments() {
 		return null;
 	}
 
-	Promise.resolve(setTimeout(() => {}, 10000));
-	console.log(appointments);
 	return appointments;
 }
-
 export async function getSomeAppointments() {
 	const supabase = createClient();
 	let { data: appointments, error } = await supabase
@@ -35,11 +32,10 @@ export async function getSomeAppointments() {
 		console.error('Error fetching appointments: ', error);
 		return null;
 	}
-	// TODO: Remove these later on production
-	Promise.resolve(setTimeout(() => {}, 10000));
-	console.log(appointments);
+
 	return appointments;
 }
+
 export async function getAppointmentDetails(uuid: string) {
 	const supabase = createClient();
 
@@ -64,7 +60,5 @@ export async function getAppointmentDetails(uuid: string) {
 		return null;
 	}
 
-	Promise.resolve(setTimeout(() => {}, 10000));
-	console.log(appointment);
 	return appointment; // return the first object in the array
 }

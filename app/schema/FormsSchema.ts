@@ -1,5 +1,11 @@
 import { z, ZodType } from 'zod';
-import { format } from 'date-fns';
+
+interface NewDateFormData {
+	date_of_appointment: Date;
+	appointment_id: string;
+	appointment_id_verification_input: string;
+}
+
 interface FormData {
 	first_name: string;
 	middle_name: string;
@@ -118,4 +124,16 @@ export const AppointmentFormSchema: ZodType<FormData> = z.object({
 		},
 		{ message: 'Appointment date must be in the future' },
 	),
+});
+
+export const SetNewDateSchema: ZodType<NewDateFormData> = z.object({
+	date_of_appointment: z.date({
+		required_error: 'Date of appointment is required',
+	}),
+	appointment_id: z.string({
+		required_error: 'Appointment ID is required',
+	}),
+	appointment_id_verification_input: z.string({
+		required_error: 'Appointment ID verification is required',
+	}),
 });

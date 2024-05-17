@@ -136,12 +136,8 @@ export async function handleAppointment(formData: FormData) {
 
 	const resultData = result.data;
 
-	// simulaate the slow network
-	await new Promise((resolve) => setTimeout(resolve, 5000));
-	// desctructure the resultData
 	const { date_of_appointment, ...data } = resultData;
 
-	// format the date
 	const formattedDate = format(date_of_appointment, 'yyyy-MM-dd');
 	console.log(formattedDate);
 }

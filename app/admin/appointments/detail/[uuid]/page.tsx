@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import { SkeletonCard } from '@/components/Skeletons/SkeletonCard';
 import { getAppointmentDetails } from '@/actions/Admin/getActions';
 import { Button } from '@/components/ui/button';
+import CalendarNew from './CalendarNew';
 import {
 	Card,
 	CardContent,
@@ -57,6 +58,7 @@ const DetailedAppointmentOverviewPage = async ({
 						</CardDescription>
 					</CardHeader>
 					<CardContent>
+						{/* TODO: EXtract other parts of the ui here that doesnt need any browser APIs */}
 						<Suspense fallback={<SkeletonCard />}>
 							<div className='w-full'>
 								<div className='grid w-full items-center grids-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 space-y-1.5'>
@@ -83,7 +85,7 @@ const DetailedAppointmentOverviewPage = async ({
 							</div>
 						</Suspense>
 
-						{/* <CalendarNew /> */}
+						<CalendarNew uuid={params.uuid.toString()} />
 					</CardContent>
 					<CardFooter className='flex justify-between'>
 						<Button variant='outline'>

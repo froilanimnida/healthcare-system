@@ -156,8 +156,6 @@ const AppointmentForm = () => {
 		values: z.infer<typeof AppointmentFormSchema>,
 	) => {
 		setSubmitting(true);
-		console.log(values);
-		console.log('Form Submitted');
 		if (!executeRecaptcha) {
 			console.log('not available to execute recaptcha');
 			return;

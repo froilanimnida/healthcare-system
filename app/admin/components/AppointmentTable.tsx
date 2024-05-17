@@ -49,6 +49,7 @@ import {
 	getAllAppointments,
 	getSomeAppointments,
 } from '@/actions/Admin/getActions';
+import { unstable_noStore } from 'next/cache';
 
 type Appointment = {
 	appointment_id: string;
@@ -67,6 +68,7 @@ interface AppointmentTableProps {
 }
 
 const AppointmentTable: React.FC<AppointmentTableProps> = async ({ all }) => {
+	unstable_noStore();
 	var someAppointments = all
 		? (await getAllAppointments()) ?? []
 		: (await getSomeAppointments()) ?? [];
