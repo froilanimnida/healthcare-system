@@ -157,7 +157,6 @@ const AppointmentForm = () => {
 	) => {
 		setSubmitting(true);
 		if (!executeRecaptcha) {
-			console.log('not available to execute recaptcha');
 			return;
 		}
 
@@ -232,6 +231,23 @@ const AppointmentForm = () => {
 									/>
 								),
 							)}
+
+							<FormField
+								name='remarks'
+								render={({ field, fieldState: { error } }) => (
+									<FormItem>
+										<FormLabel>Remarks</FormLabel>
+										<FormControl>
+											<Input
+												type='text'
+												{...field}
+											/>
+										</FormControl>
+										{error && <FormDescription></FormDescription>}
+										<FormMessage />
+									</FormItem>
+								)}
+							/>
 
 							<FormField
 								name='date_of_birth'

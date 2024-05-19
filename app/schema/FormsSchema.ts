@@ -24,6 +24,7 @@ interface FormData {
 	date_of_birth: string;
 	date_of_appointment: Date;
 	services: string;
+	remarks: string;
 }
 export const AppointmentFormSchema: ZodType<FormData> = z.object({
 	first_name: z
@@ -124,6 +125,7 @@ export const AppointmentFormSchema: ZodType<FormData> = z.object({
 		},
 		{ message: 'Appointment date must be in the future' },
 	),
+	remarks: z.string(),
 });
 
 export const SetNewDateSchema: ZodType<NewDateFormData> = z.object({

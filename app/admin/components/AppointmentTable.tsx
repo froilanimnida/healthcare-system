@@ -73,7 +73,6 @@ const AppointmentTable: React.FC<AppointmentTableProps> = async ({ all }) => {
 		? (await getAllAppointments()) ?? []
 		: (await getSomeAppointments()) ?? [];
 	const headers = [
-		{ id: 1, name: 'Appointment ID' },
 		{ id: 2, name: 'First Name' },
 		{ id: 3, name: 'Middle Name' },
 		{ id: 4, name: 'Last Name' },
@@ -108,7 +107,6 @@ const AppointmentTable: React.FC<AppointmentTableProps> = async ({ all }) => {
 								{someAppointments.map((appointment: Appointment) => {
 									return (
 										<TableRow key={appointment.appointment_id}>
-											<TableCell>{appointment.appointment_id}</TableCell>
 											<TableCell>{appointment.first_name}</TableCell>
 											<TableCell>{appointment.middle_name}</TableCell>
 											<TableCell>{appointment.last_name}</TableCell>

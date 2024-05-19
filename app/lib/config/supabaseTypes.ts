@@ -26,8 +26,11 @@ export type Database = {
           middle_name: string
           mobile_number: number
           province: string
+          remarks: string | null
           service: string
           sex: string
+          user_id: string | null
+          user_uuid: string | null
           zip_code: number
         }
         Insert: {
@@ -46,8 +49,11 @@ export type Database = {
           middle_name: string
           mobile_number: number
           province: string
+          remarks?: string | null
           service: string
           sex: string
+          user_id?: string | null
+          user_uuid?: string | null
           zip_code: number
         }
         Update: {
@@ -66,8 +72,11 @@ export type Database = {
           middle_name?: string
           mobile_number?: number
           province?: string
+          remarks?: string | null
           service?: string
           sex?: string
+          user_id?: string | null
+          user_uuid?: string | null
           zip_code?: number
         }
         Relationships: []

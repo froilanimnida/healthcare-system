@@ -72,37 +72,26 @@ export async function getUserRole() {
 		} = await supabase.auth.getUser();
 
 		try {
-			const { data: status_role, error } = await supabase
+			const { data: role, error } = await supabase
 				.from('users')
-				.select('role, verified_user')
+				.select('role')
 				.eq('user_id', user?.id)
 				.single();
+			if (error) throw new Error(error.message);
 
-			if (status_role?.verified_user === false) {
-				throw new Error('User is not verified');
-			} else {
-				if (
-					status_role?.role === '' ||
-					status_role?.role === null ||
-					status_role?.role === undefined
-				) {
+			switch (role?.role) {
+				case 'admin':
+					redirectPath = '/admin/dashboard';
+					break;
+				case 'doctor':
+					redirectPath = '/doctor/dashboard';
+					break;
+				case 'user':
+					redirectPath = '/user/dashboard';
+					break;
+				default:
 					redirectPath = '/account/role';
-				} else {
-					switch (status_role?.role) {
-						case 'admin':
-							redirectPath = '/admin/dashboard';
-							break;
-						case 'doctor':
-							redirectPath = '/doctor/dashboard';
-							break;
-						case 'user':
-							redirectPath = '/user/dashboard';
-							break;
-						default:
-							redirectPath = '/account/role';
-							break;
-					}
-				}
+					break;
 			}
 		} catch (error) {
 			console.error('Error fetching user role: ', error);
@@ -117,19 +106,55 @@ export async function getUserRole() {
 }
 export async function login(formData: { email: string; password: string }) {
 	const supabase = createClient();
-	const data = loginSchema.safeParse(formData);
+	let redirectPath = '';
 
-	if (!data.success) throw new Error('Invalid email or password');
-	const { error } = await supabase.auth.signInWithPassword({
-		email: data.data.email,
-		password: data.data.password,
-	});
+	try {
+		const data = loginSchema.safeParse(formData);
 
-	if (error) {
-		throw new Error(error.message);
+		if (!data.success) throw new Error('Invalid email or password');
+
+		const { error: signInError } = await supabase.auth.signInWithPassword({
+			email: data.data.email,
+			password: data.data.password,
+		});
+
+		if (signInError) {
+			throw new Error(signInError.message);
+		}
+
+		const {
+			data: { user },
+		} = await supabase.auth.getUser();
+
+		const { data: role, error: roleError } = await supabase
+			.from('users')
+			.select('role')
+			.eq('user_id', user?.id)
+			.single();
+
+		if (roleError) throw new Error(roleError.message);
+
+		switch (role?.role) {
+			case 'admin':
+				redirectPath = '/admin/dashboard';
+				break;
+			case 'doctor':
+				redirectPath = '/doctor/dashboard';
+				break;
+			case 'user':
+				redirectPath = '/user/dashboard';
+				break;
+			default:
+				redirectPath = '/account/role';
+				break;
+		}
+	} catch (error) {
+		console.error('Error: ', error);
+		redirectPath = '/account/login';
 	}
 
 	revalidatePath('/', 'layout');
+	redirect(redirectPath);
 	return null;
 }
 export async function signup(formData: FormData) {

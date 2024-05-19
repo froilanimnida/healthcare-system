@@ -87,12 +87,6 @@ const DetailedAppointmentOverviewPage = async ({
 
 						<CalendarNew uuid={params.uuid.toString()} />
 					</CardContent>
-					<CardFooter className='flex justify-between'>
-						<Button variant='outline'>
-							<Link href='/admin/appointments'>Back</Link>
-						</Button>
-						<Button>Save these changes</Button>
-					</CardFooter>
 				</Card>
 			</div>
 		</>

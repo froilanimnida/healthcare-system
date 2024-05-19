@@ -2,6 +2,7 @@
 import { createClient } from '@/utils/supabase/server';
 import { z, ZodType } from 'zod';
 import { format } from 'date-fns';
+import { redirect, type RedirectType } from 'next/navigation';
 
 interface FormData {
 	first_name: string;
@@ -21,6 +22,7 @@ interface FormData {
 	date_of_birth: string;
 	date_of_appointment: Date;
 	services: string;
+	remarks: string;
 }
 
 const AppointmentSchema = z.object({
@@ -122,6 +124,7 @@ const AppointmentSchema = z.object({
 		},
 		{ message: 'Appointment date must be in the future' },
 	),
+	remarks: z.string(),
 });
 
 export async function handleAppointment(formData: FormData) {
@@ -134,10 +137,67 @@ export async function handleAppointment(formData: FormData) {
 		return;
 	}
 
-	const resultData = result.data;
+	// converting the service into readable format
 
-	const { date_of_appointment, ...data } = resultData;
+	const resultData = result.data;
+	const {
+		date_of_appointment,
+		first_name,
+		middle_name,
+		last_name,
+		age,
+		city,
+		barangay,
+		zip_code,
+		home_address_line_1,
+		home_address_line_2,
+		email,
+		mobile_number,
+		alternate_mobile_number,
+		alternate_email,
+		sex,
+		date_of_birth,
+		services,
+		remarks,
+	} = resultData;
 
 	const formattedDate = format(date_of_appointment, 'yyyy-MM-dd');
-	console.log(formattedDate);
+	const formattedService = services
+		.split(',')
+		.map((service) => service.trim())
+		.map((service) => service.charAt(0).toUpperCase() + service.slice(1))
+		.join(', ');
+
+	const { data, error } = await supabase
+		.from('appointments')
+		.insert([
+			{
+				first_name,
+				middle_name,
+				last_name,
+				age,
+				city,
+				barangay,
+				zip_code,
+				home_address_line_1,
+				home_address_line_2,
+				email,
+				mobile_number,
+				alternate_mobile_number,
+				alternate_email,
+				sex,
+				date_of_birth,
+				service: formattedService,
+				date_of_appointment: formattedDate,
+				remarks,
+			},
+		])
+		.select('appointment_id');
+
+	if (error) {
+		console.error('Error inserting appointment: ', error);
+		return;
+	}
+
+	redirect(`/appointment/success?appointment_id=${data[0].appointment_id}`);
 }

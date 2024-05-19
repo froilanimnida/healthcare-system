@@ -25,6 +25,20 @@ interface SignUpFormProps {
 
 const SignUp = ({ className, ...props }: SignUpFormProps) => {
 	const [isLoading, setIsLoading] = useState(false);
+	const handleFormSubmit = async (formData: FormData) => {
+		setIsLoading(true);
+		try {
+			await toast.promise(signup(formData), {
+				loading: 'Signing Up...',
+				success: 'Signed Up!',
+				error: 'Failed to Sign Up, Please check your details and try again.',
+			});
+		} catch (error: any) {
+			console.error(error);
+		} finally {
+			setIsLoading(false);
+		}
+	};
 	return (
 		<div
 			className={cn('grid gap-6', className)}
@@ -36,22 +50,7 @@ const SignUp = ({ className, ...props }: SignUpFormProps) => {
 				</CardHeader>
 				<form
 					className='gap-3 flex flex-col items-center justify-center'
-					action={async (formData: FormData) => {
-						setIsLoading(true);
-						try {
-							await toast.promise(signup(formData), {
-								loading: 'Signing Up...',
-								success: 'Signed Up!',
-								error:
-									'Failed to Sign Up, Please check your details and try again.',
-							});
-						} catch (error: any) {
-							setIsLoading(false);
-							console.error(error);
-						} finally {
-							setIsLoading(false);
-						}
-					}}>
+					action={handleFormSubmit}>
 					<CardContent className='flex flex-col gap-5 justify-center items-center w-full'>
 						<div className='grid gap-3 w-full'>
 							<div className='grid gap-1'>
