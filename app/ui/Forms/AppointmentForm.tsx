@@ -10,7 +10,6 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { handleAppointment } from '@/app/appointment/appointmentAction';
-import FormCard from '@/components/FormCard';
 import {
 	Popover,
 	PopoverContent,
@@ -25,7 +24,6 @@ import {
 	FormLabel,
 	FormMessage,
 } from '@/components/ui/form';
-import { CardContent, CardFooter } from '@/components/ui/card';
 import {
 	Select,
 	SelectContent,
@@ -42,6 +40,16 @@ import { Cities } from '@/app/schema/Cities';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { type z } from 'zod';
 import toast from 'react-hot-toast';
+import Link from 'next/link';
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardHeader,
+	CardFooter,
+	CardTitle,
+} from '@/components/ui/card';
+
 const AppointmentForm = () => {
 	const [appointmentDate, setAppointmentDate] = useState<Date>();
 	const [confirm, setConfirm] = useState(false);
@@ -189,283 +197,292 @@ const AppointmentForm = () => {
 	};
 
 	return (
-		<div className='w-full items-center justify-center flex'>
-			<FormCard
-				title='Book and Appointment'
-				description='Please fill out the form below to book an appointment.'>
-				<Form {...appointmentForm}>
-					<form onSubmit={appointmentForm.handleSubmit(onSubmitAppointment)}>
-						<CardContent className='gap-3 md:gap-5 lg:gap-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
-							{AppointmentFormFields.map(
-								({ name, label, placeholder, type }) => (
-									<FormField
-										key={name}
-										name={name}
-										render={({ field, fieldState: { error } }) => (
-											<FormItem>
-												<FormLabel>{label}</FormLabel>
-												<FormControl>
-													<Input
-														required
-														placeholder={placeholder}
-														{...field}
-														type={type}
-														value={
-															field.value === 'number'
-																? Number(field.value)
-																: field.value
-														}
-														onChange={(e) => {
-															if (type === 'number') {
-																field.onChange(Number(e.target.value));
-															} else {
-																field.onChange(e.target.value);
+		<div className='w-11/12 max-w-screen-2xl flex justify-center items-center flex-col'>
+			<Card className='w-full'>
+				<CardHeader className='font-bold text-xl md:text-2xl lg:text-4xl'>
+					<CardTitle>Create new appointment</CardTitle>
+					<CardDescription>Please input all necessary data</CardDescription>
+				</CardHeader>
+				<CardContent className='w-full'>
+					<Form {...appointmentForm}>
+						<form
+							className='w-full flex justify-center items-center flex-col gap-5'
+							onSubmit={appointmentForm.handleSubmit(onSubmitAppointment)}>
+							<CardContent className='gap-3 w-full md:gap-5 lg:gap-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
+								{AppointmentFormFields.map(
+									({ name, label, placeholder, type }) => (
+										<FormField
+											key={name}
+											name={name}
+											render={({ field, fieldState: { error } }) => (
+												<FormItem>
+													<FormLabel>{label}</FormLabel>
+													<FormControl>
+														<Input
+															required
+															placeholder={placeholder}
+															{...field}
+															type={type}
+															value={
+																field.value === 'number'
+																	? Number(field.value)
+																	: field.value
 															}
-														}}
-													/>
-												</FormControl>
-												{error && <FormDescription></FormDescription>}
-												<FormMessage />
-											</FormItem>
-										)}
-									/>
-								),
-							)}
-
-							<FormField
-								name='remarks'
-								render={({ field, fieldState: { error } }) => (
-									<FormItem>
-										<FormLabel>Remarks</FormLabel>
-										<FormControl>
-											<Input
-												type='text'
-												{...field}
-											/>
-										</FormControl>
-										{error && <FormDescription></FormDescription>}
-										<FormMessage />
-									</FormItem>
+															onChange={(e) => {
+																if (type === 'number') {
+																	field.onChange(Number(e.target.value));
+																} else {
+																	field.onChange(e.target.value);
+																}
+															}}
+														/>
+													</FormControl>
+													{error && <FormDescription></FormDescription>}
+													<FormMessage />
+												</FormItem>
+											)}
+										/>
+									),
 								)}
-							/>
 
-							<FormField
-								name='date_of_birth'
-								render={({ field, fieldState: { error } }) => (
-									<FormItem>
-										<FormLabel>Date of Birth</FormLabel>
-										<FormControl>
-											<Input
-												required
-												type='date'
-												{...field}
-											/>
-										</FormControl>
-										{error && <FormDescription></FormDescription>}
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-
-							<FormField
-								control={appointmentForm.control}
-								name='city'
-								render={({ field, fieldState: { error } }) => (
-									<FormItem>
-										<FormLabel>City</FormLabel>
-										<Select
-											required
-											onValueChange={field.onChange}>
+								<FormField
+									name='remarks'
+									render={({ field, fieldState: { error } }) => (
+										<FormItem>
+											<FormLabel>Remarks</FormLabel>
 											<FormControl>
-												<SelectTrigger>
-													<SelectValue placeholder='Select City' />
-												</SelectTrigger>
+												<Input
+													type='text'
+													{...field}
+												/>
 											</FormControl>
-											<SelectContent>
-												<SelectGroup>
-													<SelectLabel>City</SelectLabel>
-													{Cities.map((city) => (
-														<SelectItem
-															key={city.id}
-															value={city.name}>
-															{city.name}
-														</SelectItem>
-													))}
-												</SelectGroup>
-											</SelectContent>
-										</Select>
-										{error && <FormDescription></FormDescription>}
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
+											{error && <FormDescription></FormDescription>}
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
 
-							<FormField
-								name='sex'
-								control={appointmentForm.control}
-								render={({ field, fieldState: { error } }) => (
-									<FormItem>
-										<FormLabel>Sex</FormLabel>
-										<FormControl>
-											<Select
-												onValueChange={field.onChange}
-												required>
-												<SelectTrigger>
-													<SelectValue placeholder='Select your sex' />
-												</SelectTrigger>
-												<SelectContent>
-													<SelectGroup>
-														<SelectLabel>Sex</SelectLabel>
-														<SelectItem value='male'>Male</SelectItem>
-														<SelectItem value='female'>Female</SelectItem>
-														<SelectItem value='other'>Other</SelectItem>
-													</SelectGroup>
-												</SelectContent>
-											</Select>
-										</FormControl>
-										{error && <FormDescription></FormDescription>}
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
+								<FormField
+									name='date_of_birth'
+									render={({ field, fieldState: { error } }) => (
+										<FormItem>
+											<FormLabel>Date of Birth</FormLabel>
+											<FormControl>
+												<Input
+													required
+													type='date'
+													{...field}
+												/>
+											</FormControl>
+											{error && <FormDescription></FormDescription>}
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
 
-							<FormField
-								control={appointmentForm.control}
-								name='services'
-								render={({ field, fieldState: { error } }) => (
-									<FormItem>
-										<FormLabel>Service</FormLabel>
-										<FormControl>
+								<FormField
+									control={appointmentForm.control}
+									name='city'
+									render={({ field, fieldState: { error } }) => (
+										<FormItem>
+											<FormLabel>City</FormLabel>
 											<Select
 												required
 												onValueChange={field.onChange}>
-												<SelectTrigger>
-													<SelectValue placeholder='Select Service' />
-												</SelectTrigger>
+												<FormControl>
+													<SelectTrigger>
+														<SelectValue placeholder='Select City' />
+													</SelectTrigger>
+												</FormControl>
 												<SelectContent>
 													<SelectGroup>
-														<SelectLabel>Service</SelectLabel>
-														<SelectItem value='prenatal'>Prenatal</SelectItem>
-														<SelectItem value='vaginal_cleaning'>
-															Vaginal Cleaning
-														</SelectItem>
-														<SelectItem value='dental'>Dental</SelectItem>
-														<SelectItem value='vaccination_for_babies'>
-															Vaccination for Babies
-														</SelectItem>
-														<SelectItem value='maintenance_for_those_in_need'>
-															Maintenance for those in need
-														</SelectItem>
-														<SelectItem value='hiv_testing'>
-															HIV Testing
-														</SelectItem>
-														<SelectItem value='tb_dots'>TB Dots</SelectItem>
+														<SelectLabel>City</SelectLabel>
+														{Cities.map((city) => (
+															<SelectItem
+																key={city.id}
+																value={city.name}>
+																{city.name}
+															</SelectItem>
+														))}
 													</SelectGroup>
 												</SelectContent>
 											</Select>
-										</FormControl>
-										{error && <FormDescription></FormDescription>}
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-
-							<FormField
-								name='date_of_appointment'
-								render={({ field, fieldState: { error } }) => (
-									<FormItem>
-										<FormLabel>Date of Appointment</FormLabel>
-										<FormControl>
-											<Popover>
-												<PopoverTrigger asChild>
-													<Button
-														variant={'outline'}
-														className={cn(
-															'w-full justify-start text-left font-normal',
-															!appointmentDate && 'text-muted-foreground',
-														)}>
-														<CalendarIcon className='mr-2 h-4 w-4' />
-														{appointmentDate ? (
-															format(appointmentDate, 'PPP')
-														) : (
-															<span>Pick a date</span>
-														)}
-													</Button>
-												</PopoverTrigger>
-												<PopoverContent className='w-auto p-0'>
-													<Calendar
-														disabled={(date) => {
-															const isPastDate =
-																date <= new Date() ||
-																date <= new Date('1900-01-01');
-															const isWeekend =
-																date.getDay() === 0 || date.getDay() === 6;
-															return isPastDate || isWeekend;
-														}}
-														selected={appointmentDate}
-														mode='single'
-														onSelect={(date) => {
-															setAppointmentDate(date);
-															const event = {
-																target: {
-																	name: field.name,
-																	value: date,
-																},
-															};
-															field.onChange(event);
-														}}
-														initialFocus
-													/>
-												</PopoverContent>
-											</Popover>
-										</FormControl>
-										{error && <FormDescription></FormDescription>}
-										<FormMessage />
-									</FormItem>
-								)}
-							/>
-						</CardContent>
-						<CardFooter className='flex gap-5 md:gap-0 justify-between items-center flex-col md:flex-row w-full'>
-							<div className='flex items-center space-x-2'>
-								<Checkbox
-									required
-									onCheckedChange={(e) => {
-										setConfirm(e === 'indeterminate' ? false : e);
-									}}
-									id='confirm'
+											{error && <FormDescription></FormDescription>}
+											<FormMessage />
+										</FormItem>
+									)}
 								/>
-								<label
-									htmlFor='confirm'
-									className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'>
-									Please confirm that the information provided is true and
-									correct.
-								</label>
-							</div>
-							<div
-								className={`flex gap-5 items-center justify-center md:justify-end w-full md:w-1/6 flex-col md:flex-row space-x-2`}>
-								<Button
-									type='submit'
-									disabled={submitting || !confirm}>
-									{submitting && (
-										<Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
+
+								<FormField
+									name='sex'
+									control={appointmentForm.control}
+									render={({ field, fieldState: { error } }) => (
+										<FormItem>
+											<FormLabel>Sex</FormLabel>
+											<FormControl>
+												<Select
+													onValueChange={field.onChange}
+													required>
+													<SelectTrigger>
+														<SelectValue placeholder='Select your sex' />
+													</SelectTrigger>
+													<SelectContent>
+														<SelectGroup>
+															<SelectLabel>Sex</SelectLabel>
+															<SelectItem value='male'>Male</SelectItem>
+															<SelectItem value='female'>Female</SelectItem>
+															<SelectItem value='other'>Other</SelectItem>
+														</SelectGroup>
+													</SelectContent>
+												</Select>
+											</FormControl>
+											{error && <FormDescription></FormDescription>}
+											<FormMessage />
+										</FormItem>
 									)}
-									Submit
-								</Button>
-								<Button
-									onClick={resetFormField}
-									variant={'outline'}
-									type='reset'
-									disabled={submitting}>
-									{submitting && (
-										<Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
+								/>
+
+								<FormField
+									control={appointmentForm.control}
+									name='services'
+									render={({ field, fieldState: { error } }) => (
+										<FormItem>
+											<FormLabel>Service</FormLabel>
+											<FormControl>
+												<Select
+													required
+													onValueChange={field.onChange}>
+													<SelectTrigger>
+														<SelectValue placeholder='Select Service' />
+													</SelectTrigger>
+													<SelectContent>
+														<SelectGroup>
+															<SelectLabel>Service</SelectLabel>
+															<SelectItem value='prenatal'>Prenatal</SelectItem>
+															<SelectItem value='vaginal_cleaning'>
+																Vaginal Cleaning
+															</SelectItem>
+															<SelectItem value='dental'>Dental</SelectItem>
+															<SelectItem value='vaccination_for_babies'>
+																Vaccination for Babies
+															</SelectItem>
+															<SelectItem value='maintenance_for_those_in_need'>
+																Maintenance for those in need
+															</SelectItem>
+															<SelectItem value='hiv_testing'>
+																HIV Testing
+															</SelectItem>
+															<SelectItem value='tb_dots'>TB Dots</SelectItem>
+														</SelectGroup>
+													</SelectContent>
+												</Select>
+											</FormControl>
+											{error && <FormDescription></FormDescription>}
+											<FormMessage />
+										</FormItem>
 									)}
-									Reset
-								</Button>
-							</div>
-						</CardFooter>
-					</form>
-				</Form>
-			</FormCard>
+								/>
+
+								<FormField
+									name='date_of_appointment'
+									render={({ field, fieldState: { error } }) => (
+										<FormItem>
+											<FormLabel>Date of Appointment</FormLabel>
+											<FormControl>
+												<Popover>
+													<PopoverTrigger asChild>
+														<Button
+															variant={'outline'}
+															className={cn(
+																'w-full justify-start text-left font-normal',
+																!appointmentDate && 'text-muted-foreground',
+															)}>
+															<CalendarIcon className='mr-2 h-4 w-4' />
+															{appointmentDate ? (
+																format(appointmentDate, 'PPP')
+															) : (
+																<span>Pick a date</span>
+															)}
+														</Button>
+													</PopoverTrigger>
+													<PopoverContent className='w-auto p-0'>
+														<Calendar
+															disabled={(date) => {
+																const isPastDate =
+																	date <= new Date() ||
+																	date <= new Date('1900-01-01');
+																const isWeekend =
+																	date.getDay() === 0 || date.getDay() === 6;
+																return isPastDate || isWeekend;
+															}}
+															selected={appointmentDate}
+															mode='single'
+															onSelect={(date) => {
+																setAppointmentDate(date);
+																const event = {
+																	target: {
+																		name: field.name,
+																		value: date,
+																	},
+																};
+																field.onChange(event);
+															}}
+															initialFocus
+														/>
+													</PopoverContent>
+												</Popover>
+											</FormControl>
+											{error && <FormDescription></FormDescription>}
+											<FormMessage />
+										</FormItem>
+									)}
+								/>
+							</CardContent>
+							<CardFooter className='flex gap-5 lg:gap-0 justify-center lg:justify-between items-center flex-col lg:flex-row w-full'>
+								<div className='flex items-center space-x-2'>
+									<Checkbox
+										required
+										onCheckedChange={(e) => {
+											setConfirm(e === 'indeterminate' ? false : e);
+										}}
+										id='confirm'
+									/>
+									<label
+										htmlFor='confirm'
+										className='text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'>
+										Please confirm that the information provided is true and
+										correct.
+									</label>
+								</div>
+								<div
+									className={`flex gap-5 items-center justify-center lg:justify-end w-full md:w-1/6 flex-col lg:flex-row space-x-2`}>
+									<Button
+										type='submit'
+										disabled={submitting || !confirm}>
+										{submitting && (
+											<Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
+										)}
+										Submit
+									</Button>
+									<Button
+										onClick={resetFormField}
+										variant={'destructive'}
+										type='reset'
+										disabled={submitting}>
+										{submitting && (
+											<Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
+										)}
+										Reset
+									</Button>
+									<Button variant={'outline'}>
+										<Link href={'/appointment/search'}>Search Appointment</Link>
+									</Button>
+								</div>
+							</CardFooter>
+						</form>
+					</Form>
+				</CardContent>
+			</Card>
 		</div>
 	);
 };

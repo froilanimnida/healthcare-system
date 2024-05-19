@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Suspense } from 'react';
+import Skeleton from '@/components/Skeletons/Skeleton';
 import {
 	Card,
 	CardContent,
@@ -44,7 +45,9 @@ const page = () => {
 						</p>
 					</CardContent>
 					<CardFooter>
-						<ButtonsSuccessActionsWrapper />
+						<Suspense fallback={<Skeleton />}>
+							<ButtonsSuccessActionsWrapper />
+						</Suspense>
 					</CardFooter>
 				</Card>
 			</div>

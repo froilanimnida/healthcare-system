@@ -6,7 +6,11 @@ import { useSearchParams } from 'next/navigation';
 const ButtonsSuccessActionsWrapper = () => {
 	const idParams = useSearchParams();
 	const appointmentId = idParams.get('appointment_id');
-	return <SuccessActionButtons appointment_uuid={appointmentId!} />;
+	return (
+		<>
+			<SuccessActionButtons appointment_uuid={appointmentId!} />
+		</>
+	);
 };
 
 export default ButtonsSuccessActionsWrapper;

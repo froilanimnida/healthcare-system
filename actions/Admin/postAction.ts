@@ -1,7 +1,6 @@
 'use server';
 import { createClient } from '@/utils/supabase/server';
 import { z } from 'zod';
-import { notFound, redirect } from 'next/navigation';
 import { format } from 'date-fns';
 import { revalidatePath } from 'next/cache';
 

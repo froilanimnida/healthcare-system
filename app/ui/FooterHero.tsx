@@ -1,11 +1,10 @@
 'use client';
 import React from 'react';
-import LogoIcon from '@/public/images/logo.webp';
+import Logo from '@/app/components/Logo';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 const FooterHero = () => {
-	// get the path don't show if the path is in the list: ['/account/*', '/user/*', '/admin/*', '/nurse/*', '/doctor/*']
 	const path = usePathname();
 	const pathList = ['/account', '/user', '/admin', '/nurse', '/doctor'];
 	const isPath = pathList.some((p) => path.includes(p));
@@ -16,7 +15,7 @@ const FooterHero = () => {
 				className={`${
 					isPath ? 'hidden' : 'flex'
 				} flex flex-col justify-center items-center w-full`}>
-				<div className='w-11/12'>
+				<div className='w-11/12 max-w-screen-2xl'>
 					<footer className='grid grid-cols-3 w-full p-10 bg-base-200 text-base-content'>
 						<nav className='flex flex-col gap-3'>
 							<h6 className='footer-title'>Services</h6>
@@ -68,12 +67,9 @@ const FooterHero = () => {
 					</footer>
 					<footer className='flex flex-row justify-between w-full py-4 border-t bg-base-200 text-base-content border-base-300'>
 						<aside className='items-center grid-flow-col'>
-							<Image
-								src={LogoIcon}
-								alt='Logo'
-								width={75}
-								height={75}
-							/>
+							<Link href='/'>
+								<Logo />
+							</Link>
 							<p>
 								Nora Birthing Care Clinic <br />A Maternity Clinic
 							</p>

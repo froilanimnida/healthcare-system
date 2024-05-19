@@ -10,11 +10,17 @@ interface FormCardProps {
 	title: string;
 	description: string;
 	children: React.ReactNode;
+	className?: string;
 }
 
-const FormCard = ({ title, description, children }: FormCardProps) => {
+const FormCard = ({
+	className,
+	title,
+	description,
+	children,
+}: FormCardProps) => {
 	return (
-		<Card className='w-11/12'>
+		<Card className={`w-11/12 ${className ?? ''}`}>
 			<CardHeader className='font-bold text-xl md:text-2xl lg:text-4xl'>
 				<CardTitle>{title}</CardTitle>
 				<CardDescription>{description}</CardDescription>

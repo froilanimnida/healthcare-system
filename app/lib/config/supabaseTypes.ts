@@ -11,9 +11,11 @@ export type Database = {
     Tables: {
       appointments: {
         Row: {
+          age: number | null
           alternate_email: string | null
           alternate_mobile_number: number | null
           appointment_id: string
+          barangay: string | null
           city: string
           date_of_appointment: string
           date_of_birth: string
@@ -21,22 +23,23 @@ export type Database = {
           first_name: string
           home_address_line_1: string
           home_address_line_2: string
-          house_number: string
           last_name: string
           middle_name: string
           mobile_number: number
-          province: string
           remarks: string | null
           service: string
           sex: string
+          status: string | null
           user_id: string | null
           user_uuid: string | null
           zip_code: number
         }
         Insert: {
+          age?: number | null
           alternate_email?: string | null
           alternate_mobile_number?: number | null
           appointment_id?: string
+          barangay?: string | null
           city: string
           date_of_appointment: string
           date_of_birth: string
@@ -44,22 +47,23 @@ export type Database = {
           first_name: string
           home_address_line_1: string
           home_address_line_2: string
-          house_number: string
           last_name: string
           middle_name: string
           mobile_number: number
-          province: string
           remarks?: string | null
           service: string
           sex: string
+          status?: string | null
           user_id?: string | null
           user_uuid?: string | null
           zip_code: number
         }
         Update: {
+          age?: number | null
           alternate_email?: string | null
           alternate_mobile_number?: number | null
           appointment_id?: string
+          barangay?: string | null
           city?: string
           date_of_appointment?: string
           date_of_birth?: string
@@ -67,14 +71,13 @@ export type Database = {
           first_name?: string
           home_address_line_1?: string
           home_address_line_2?: string
-          house_number?: string
           last_name?: string
           middle_name?: string
           mobile_number?: number
-          province?: string
           remarks?: string | null
           service?: string
           sex?: string
+          status?: string | null
           user_id?: string | null
           user_uuid?: string | null
           zip_code?: number
@@ -93,7 +96,6 @@ export type Database = {
           middle_name: string | null
           role: string | null
           user_id: string
-          verified_user: boolean
         }
         Insert: {
           address?: string | null
@@ -106,7 +108,6 @@ export type Database = {
           middle_name?: string | null
           role?: string | null
           user_id: string
-          verified_user?: boolean
         }
         Update: {
           address?: string | null
@@ -119,7 +120,6 @@ export type Database = {
           middle_name?: string | null
           role?: string | null
           user_id?: string
-          verified_user?: boolean
         }
         Relationships: []
       }

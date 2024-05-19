@@ -1,19 +1,16 @@
 import React, { Suspense } from 'react';
 import { SkeletonCard } from '@/components/Skeletons/SkeletonCard';
 import { getAppointmentDetails } from '@/actions/Admin/getActions';
-import { Button } from '@/components/ui/button';
 import CalendarNew from './CalendarNew';
 import {
 	Card,
 	CardContent,
 	CardDescription,
-	CardFooter,
 	CardHeader,
 	CardTitle,
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import Link from 'next/link';
 
 type Appointment = {
 	appointment_uuid: string;

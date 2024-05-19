@@ -128,6 +128,13 @@ export const AppointmentFormSchema: ZodType<FormData> = z.object({
 	remarks: z.string(),
 });
 
+export const SearchAppointmentSchema: ZodType<{ appointment_id: string }> =
+	z.object({
+		appointment_id: z.string({
+			required_error: 'Appointment ID is required',
+		}),
+	});
+
 export const SetNewDateSchema: ZodType<NewDateFormData> = z.object({
 	date_of_appointment: z.date({
 		required_error: 'Date of appointment is required',
