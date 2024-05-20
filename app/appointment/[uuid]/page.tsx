@@ -78,7 +78,7 @@ const ViewAppointmentForm = async ({
 
 	return (
 		<div className='w-full flex justify-center items-center'>
-			<Card className='w-11/12'>
+			<Card className='w-11/12 max-w-screen-2xl'>
 				<CardHeader>
 					<CardTitle>Appointment Details</CardTitle>
 					<CardDescription>
