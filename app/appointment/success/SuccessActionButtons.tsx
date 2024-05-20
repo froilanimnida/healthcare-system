@@ -36,7 +36,7 @@ const SuccessActionButtons = ({ appointment_uuid }: RSVPButtonProps) => {
 	};
 
 	return (
-		<div className='flex flex-row gap-4'>
+		<div className='flex md:flex-row flex-col gap-4'>
 			<Button onClick={handleRSVPClick}>RSVP on Google Calendar</Button>
 			<Button variant={'secondary'}>
 				<Link href={`/appointment/${appointment_uuid}`}>View Appointment</Link>
