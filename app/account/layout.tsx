@@ -2,7 +2,7 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import Logo from '../components/Logo';
+import Logo from '../../components/ui/Logo';
 
 export const metadata: Metadata = {
 	title: 'Accounts Page',

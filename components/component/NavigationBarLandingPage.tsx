@@ -2,9 +2,14 @@
 import React from 'react';
 import { Search } from 'lucide-react';
 import { usePathname } from 'next/navigation';
-import Logo from './Logo';
+import Logo from '../ui/Logo';
 import Link from 'next/link';
-import { AboutIcon, ContactIcon, DoctorIcon, PlansIcon } from '../ui/icons';
+import {
+	AboutIcon,
+	ContactIcon,
+	DoctorIcon,
+	PlansIcon,
+} from '../../app/ui/icons';
 import { Button } from '@/components/ui/button';
 
 const NavigationBarLandingPage = () => {
@@ -20,7 +25,13 @@ const NavigationBarLandingPage = () => {
 		},
 	];
 	const path = usePathname();
-	const pathList = ['/account', '/user', '/admin', '/doctor'];
+	const pathList = [
+		'/account',
+		'/user',
+		'/admin',
+		'/doctor',
+		'/telemedicine/call',
+	];
 	const isPath = pathList.some((p) => path.startsWith(p));
 	return (
 		<div

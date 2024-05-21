@@ -1,12 +1,19 @@
 'use client';
 import React from 'react';
-import Logo from '@/app/components/Logo';
+import Logo from '@/components/ui/Logo';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 const FooterHero = () => {
 	const path = usePathname();
-	const pathList = ['/account', '/user', '/admin', '/nurse', '/doctor'];
+	const pathList = [
+		'/account',
+		'/user',
+		'/admin',
+		'/nurse',
+		'/doctor',
+		'/telemedicine/call',
+	];
 	const isPath = pathList.some((p) => path.includes(p));
 
 	return (
