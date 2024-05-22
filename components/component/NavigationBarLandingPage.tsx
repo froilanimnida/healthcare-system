@@ -4,19 +4,13 @@ import { Search } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import Logo from '../ui/Logo';
 import Link from 'next/link';
-import {
-	AboutIcon,
-	ContactIcon,
-	DoctorIcon,
-	PlansIcon,
-} from '../../app/ui/icons';
+import { AboutIcon, ContactIcon, DoctorIcon } from '../ui/icons';
 import { Button } from '@/components/ui/button';
 
 const NavigationBarLandingPage = () => {
 	const links = [
 		{ name: 'About', href: '/about', icon: <AboutIcon /> },
 		{ name: 'Doctors', href: '/doctor', icon: <DoctorIcon /> },
-		{ name: 'Plans', href: '/plans', icon: <PlansIcon /> },
 		{ name: 'Contact', href: '/contact', icon: <ContactIcon /> },
 		{
 			name: 'Appointment',

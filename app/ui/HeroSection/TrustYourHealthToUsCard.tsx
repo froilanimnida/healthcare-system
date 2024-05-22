@@ -1,5 +1,5 @@
 import React from 'react';
-import GroupOfDoctors from '@/public/images/hero/group-of-doctors.jpg';
+import Babies from '@/public/images/hero/babies-image.webp';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Card } from '@/components/ui/card';
@@ -11,27 +11,30 @@ const TrustYourHealthToUsCard = () => {
 			<div className='w-full'>
 				<Image
 					className='rounded-xl h-full object-cover'
-					src={GroupOfDoctors}
-					alt='Group of doctors'
+					src={Babies}
+					alt='Fingertip of a baby holding an adult finger'
 				/>
 			</div>
-			<div className='flex flex-col gap-3 md:gap-6'>
-				<h1 className='font-bold text-xl md:text-4xl'>
-					Trust your health to us
-				</h1>
-				<p>
-					Our healthcare center is home to a team of highly skilled doctors and
-					nurses. They come from diverse medical backgrounds, bringing a wealth
-					of knowledge in various fields of medicine. With our team, you can
-					trust that your health and well-being are our top priority.
-				</p>
+			<div className='flex justify-between flex-col pb-10'>
+				<div className='flex flex-col gap-5'>
+					<h1 className='font-bold text-xl md:text-4xl'>
+						Trust your prenatal health to us
+					</h1>
+					<p>
+						Our prenatal clinic is home to a team of highly skilled
+						obstetricians and nurses specialized in prenatal care. They have
+						extensive experience in providing comprehensive care for expectant
+						mothers and their babies. With our team, you can trust that your
+						prenatal health and well-being are our top priority.
+					</p>
+				</div>
 				<div className='flex flex-col md:flex-row gap-5'>
 					<Button>
 						<Link href={'/appointment'}>Book an appointment</Link>
 					</Button>
 					<Button variant={'outline'}>
 						<Link href={'/trust-your-health-to-us'}>
-							Learn more about our team
+							Learn more about our prenatal care team
 						</Link>
 					</Button>
 				</div>
