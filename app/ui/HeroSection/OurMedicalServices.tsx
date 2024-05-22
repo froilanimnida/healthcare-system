@@ -1,29 +1,29 @@
 import React from 'react';
-import { HealthIcon, MicroscopeIcon, SurgeryIcon } from '@/app/ui/icons';
+import { DentalIcon, VaccineIcon, PrenatalIcon } from '@/app/ui/icons';
 import Link from 'next/link';
 import { Card } from '@/components/ui/card';
 
 const OurMedicalServices = () => {
 	const medicalServices = [
 		{
-			icon: <MicroscopeIcon />,
-			title: 'Laboratory Test Services',
+			icon: <DentalIcon />,
+			title: 'Dental Services',
 			description:
-				'Our laboratory test services are designed to provide accurate and reliable results, ensuring that you receive the best possible care.',
+				'Our dental services are designed to provide expert dental care, ensuring that you receive the best possible treatment.',
 			link: '/laboratory-test-services',
 		},
 		{
-			icon: <HealthIcon />,
-			title: 'First Aid Services',
+			icon: <VaccineIcon />,
+			title: 'Vaccination Services',
 			description:
-				'Our first aid services are designed to provide immediate medical attention in case of an emergency, ensuring that you receive the best possible care.',
+				'Our vaccination services are designed to provide expert vaccination care, ensuring that your infant and kids receive the best possible treatment.',
 			link: '/first-aid-services',
 		},
 		{
-			icon: <SurgeryIcon />,
-			title: 'Professional Surgical Services',
+			icon: <PrenatalIcon />,
+			title: 'Prenatal Services',
 			description:
-				'Our professional surgical services are designed to provide expert surgical care, ensuring that you receive the best possible treatment.',
+				'Our prenatal services are designed to provide expert prenatal care, ensuring that you receive the best possible treatment.',
 			link: '/surgical-services',
 		},
 	];
@@ -32,9 +32,9 @@ const OurMedicalServices = () => {
 			<div className='gap-3 flex flex-col'>
 				<h1 className='font-bold text-2xl md:text-4xl'>Our Medical Services</h1>
 				<p>
-					Experience personalized and comprehensive healthcare at Our Medical
-					Services. Our dedicated team ensures your journey to optimal health
-					and vitality, from diagnosis to treatment.
+					We offer a wide range of medical services to cater to your health
+					needs. Our services are designed to provide expert medical care,
+					ensuring that you receive the best possible treatment.
 				</p>
 			</div>
 

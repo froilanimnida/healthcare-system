@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import DoctorImage from '@/public/images/hero/hero-doctor.jpg';
+import BabyImage from '@/public/images/hero/hero.webp';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -11,13 +11,12 @@ const Hero = () => {
 			<aside className='flex flex-col justify-around'>
 				<div className='flex flex-col justify-start gap-2 md:gap-7'>
 					<h1 className='text-2xl md:text-4xl font-bold'>
-						Crafting Care for your Holistic Health and Better Life
+						Welcome to Nora Birthing Care Clinic
 					</h1>
 					<p className='text-xl'>
-						At our wellness center, we believe in the transformative power of
-						personalized care. We understand that true well-being encompasses
-						not only physical health but also emotional, mental, and spiritual
-						balance
+						Experience personalized and comprehensive healthcare at Nora
+						Birthing Care Clinic. Our dedicated team ensures your journey to
+						optimal health and vitality, from diagnosis to treatment.
 					</p>
 				</div>
 				<div className='flex mt-5 flex-row gap-5 w-full'>
@@ -28,19 +27,17 @@ const Hero = () => {
 							Book an Appointment
 						</Link>
 					</Button>
-					<Button variant={'outline'}>
-						<Link
-							className='text-base hidden md:flex'
-							href={'/our-services'}>
-							Our Services
-						</Link>
+					<Button
+						className='text-base hidden md:flex'
+						variant={'outline'}>
+						<Link href={'/our-services'}>Our Services</Link>
 					</Button>
 				</div>
 			</aside>
 			<figure>
 				<Image
 					className='rounded-xl w-full md:w-96 h-96 md:h-96 object-cover'
-					src={DoctorImage}
+					src={BabyImage}
 					alt='A Doctor'
 				/>
 			</figure>
