@@ -1,22 +1,22 @@
 import React from 'react';
-import { DentalIcon, VaccineIcon, PrenatalIcon } from '@/app/ui/icons';
+import { BloodPressureIcon, PrenatalIcon, EarIcon } from '@/app/ui/icons';
 import Link from 'next/link';
 import { Card } from '@/components/ui/card';
 
 const OurMedicalServices = () => {
 	const medicalServices = [
 		{
-			icon: <DentalIcon />,
-			title: 'Dental Services',
+			icon: <EarIcon />,
+			title: 'Baby Piercing Services',
 			description:
-				'Our dental services are designed to provide expert dental care, ensuring that you receive the best possible treatment.',
+				'Our baby piercing services are designed to provide expert baby piercing care, ensuring that your baby receives the best possible treatment.',
 			link: '/laboratory-test-services',
 		},
 		{
-			icon: <VaccineIcon />,
-			title: 'Vaccination Services',
+			icon: <BloodPressureIcon />,
+			title: 'Blood Pressure Monitoring Services',
 			description:
-				'Our vaccination services are designed to provide expert vaccination care, ensuring that your infant and kids receive the best possible treatment.',
+				'Our blood pressure monitoring services are designed to provide expert blood pressure monitoring care, ensuring that you receive the best possible treatment.',
 			link: '/first-aid-services',
 		},
 		{
