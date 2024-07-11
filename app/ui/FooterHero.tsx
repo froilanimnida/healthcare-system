@@ -20,51 +20,23 @@ const FooterHero = () => {
 				<div className='w-11/12 max-w-screen-2xl'>
 					<footer className='grid md:grid-cols-2 lg:grid-cols-4 grid-cols-1 gap-10 lg:gap-0  w-full p-10 bg-base-200 text-base-content'>
 						<nav className='flex flex-col gap-3'>
-							<h6 className='footer-title'>Services</h6>
-							<Link
-								href={'/services'}
-								className='link link-hover'>
-								Offered Services
-							</Link>
-							<Link
-								href={'/find-doctor'}
-								className='link link-hover'>
-								Find a Doctor
-							</Link>
-							<Link
-								href={'/call-hotlines'}
-								className='link link-hover'>
-								Call and Hotlines
-							</Link>
-							<Link
-								href={'/appointment'}
-								className='link link-hover'>
-								Book an Appointment
-							</Link>
+							<h6 className='font-bold'>Services</h6>
+							<Link href={'/services'}>Offered Services</Link>
+							<Link href={'/find-doctor'}>Find a Doctor</Link>
+							<Link href={'/call-hotlines'}>Call and Hotlines</Link>
+							<Link href={'/appointment'}>Book an Appointment</Link>
 						</nav>
 						<nav className='flex flex-col gap-3'>
-							<h6 className='footer-title'>Company</h6>
-							<Link
-								href={'/about-us'}
-								className='link link-hover'>
-								About us
-							</Link>
-							<Link
-								href={'/history'}
-								className='link link-hover'>
-								History
-							</Link>
-							<Link
-								href={'/mission-vision'}
-								className='link link-hover'>
-								Mission & Vision
-							</Link>
+							<h6 className='font-bold'>Company</h6>
+							<Link href={'/about-us'}>About us</Link>
+							<Link href={'/history'}>History</Link>
+							<Link href={'/mission-vision'}>Mission & Vision</Link>
 						</nav>
 						<nav className='flex flex-col gap-3'>
-							<h6 className='footer-title'>Legal</h6>
-							<a className='link link-hover'>Terms of use</a>
-							<a className='link link-hover'>Privacy policy</a>
-							<a className='link link-hover'>Cookie policy</a>
+							<h6 className='font-bold'>Legal</h6>
+							<Link href={'/tos'}>Terms of use</Link>
+							<Link href={'/privacy-policy'}>Privacy policy</Link>
+							<Link href={'/cookie-policy'}>Cookie policy</Link>
 						</nav>
 						<div className='flex flex-col gap-3'>
 							<h1>Accredited by:</h1>
