@@ -1,6 +1,8 @@
 'use client';
 import React from 'react';
-import Logo from '@/components/ui/Logo';
+import Logo from '@/app/components/Logo';
+import PhilHealth from '@/public/images/philhealth-logo.webp';
+import DOH from '@/public/images/doh-logo.webp';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -23,7 +25,7 @@ const FooterHero = () => {
 					isPath ? 'hidden' : 'flex'
 				} flex flex-col justify-center items-center w-full`}>
 				<div className='w-11/12 max-w-screen-2xl'>
-					<footer className='grid grid-cols-3 w-full p-10 bg-base-200 text-base-content'>
+					<footer className='grid md:grid-cols-2 lg:grid-cols-4 grid-cols-1 gap-10 lg:gap-0  w-full p-10 bg-base-200 text-base-content'>
 						<nav className='flex flex-col gap-3'>
 							<h6 className='footer-title'>Services</h6>
 							<Link
@@ -71,6 +73,21 @@ const FooterHero = () => {
 							<a className='link link-hover'>Privacy policy</a>
 							<a className='link link-hover'>Cookie policy</a>
 						</nav>
+						<div className='flex flex-col gap-3'>
+							<h1>Accredited by:</h1>
+							<Image
+								src={PhilHealth}
+								alt='PhilHealth'
+								width={150}
+								height={150}
+							/>
+							<Image
+								src={DOH}
+								alt='DOH'
+								width={150}
+								height={150}
+							/>
+						</div>
 					</footer>
 					<footer className='flex flex-row justify-between w-full py-4 border-t bg-base-200 text-base-content border-base-300'>
 						<aside className='items-center grid-flow-col'>
