@@ -4,15 +4,20 @@ import BabyImage from '@/public/images/hero/hero.webp';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { TextGenerateEffect } from '@/components/ui/text-generate-effect';
 
 const Hero = () => {
 	return (
 		<Card className='flex flex-col-reverse md:flex-row p-5 gap-5 rounded-xl'>
 			<aside className='flex flex-col justify-around'>
 				<div className='flex flex-col justify-start gap-2 md:gap-7'>
-					<h1 className='text-2xl md:text-4xl font-bold'>
+					<TextGenerateEffect
+						words={'Welcome to Nora Birthing Care Clinic'}
+						className='text-2xl md:text-4xl font-bold'
+					/>
+					{/* <h1 className='text-2xl md:text-4xl font-bold'>
 						Welcome to Nora Birthing Care Clinic
-					</h1>
+					</h1> */}
 					<p className='text-xl'>
 						Experience personalized and comprehensive healthcare at Nora
 						Birthing Care Clinic. Our dedicated team ensures your journey to
