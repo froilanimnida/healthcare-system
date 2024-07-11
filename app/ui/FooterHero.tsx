@@ -8,7 +8,14 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 const FooterHero = () => {
 	const path = usePathname();
-	const pathList = ['/account', '/user', '/admin', '/nurse', '/doctor'];
+	const pathList = [
+		'/account',
+		'/user',
+		'/admin',
+		'/nurse',
+		'/doctor',
+		'/telemedicine/call',
+	];
 	const isPath = pathList.some((p) => path.includes(p));
 
 	return (

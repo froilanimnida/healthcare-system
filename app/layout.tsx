@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import NavigationBarLandingPage from '@/app/components/NavigationBarLandingPage';
+import NavigationBarLandingPage from '@/components/component/NavigationBarLandingPage';
 import FooterHero from '@/app/ui/FooterHero';
 import { Inter } from 'next/font/google';
 import './globals.css';
