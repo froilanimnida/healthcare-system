@@ -1,5 +1,5 @@
 import React from 'react';
-import ResetPasswordForm from '@/app/ui/Forms/ResetPassword';
+import ResetPasswordForm from '@/app/(account)/account/reset-password/components/ResetPassword';
 import Link from 'next/link';
 import { Metadata } from 'next';
 

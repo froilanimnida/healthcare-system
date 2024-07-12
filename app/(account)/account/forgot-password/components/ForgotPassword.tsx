@@ -1,11 +1,9 @@
 'use client';
-
-import React from 'react';
+import React, { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Icons } from '@/components/ui/icons';
-import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { cn } from '@/lib/utils';
 import { forgotPassword } from '@/app/auth/actions';

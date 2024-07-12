@@ -33,7 +33,7 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from '@/components/ui/tooltip';
-import LogoutButton from '../ui/LogoutButton';
+import LogoutButton from '../../../ui/LogoutButton';
 
 export default function DoctorLayout({
 	children,

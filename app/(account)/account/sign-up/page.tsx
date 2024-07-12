@@ -1,5 +1,5 @@
 import React from 'react';
-import SignUp from '@/app/account/sign-up/SignUpForm';
+import SignUp from '@/app/(account)/account/sign-up/components/SignUpForm';
 import Link from 'next/link';
 import { Metadata } from 'next';
 

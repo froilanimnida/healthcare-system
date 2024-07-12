@@ -1,5 +1,5 @@
 import React from 'react';
-import { DoctorsGrid } from '@/app/find-doctor/components/DoctorsGrid';
+import { DoctorsGrid } from '@/app/doctors/components/DoctorsGrid';
 
 const FindDoctorPage = () => {
 	return (

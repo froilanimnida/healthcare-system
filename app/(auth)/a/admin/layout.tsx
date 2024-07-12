@@ -37,8 +37,8 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from '@/components/ui/tooltip';
-import LogoutButton from '../ui/LogoutButton';
-import Logo from '../components/Logo';
+import LogoutButton from '../../../ui/LogoutButton';
+import Logo from '../../../components/Logo';
 
 export default function AdminLayout({
 	children,

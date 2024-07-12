@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import SignUp from './sign-up/page';
+import SignUp from './account/sign-up/page';
 
 const AccountPage = () => {
 	return (

@@ -1,10 +1,10 @@
 import React from 'react';
-import DoctorDashboardPage from '@/app/doctor/dashboard/page';
+import UserDashboardPage from '@/app/(auth)/a/user/dashboard/page';
 
 const page = () => {
 	return (
 		<>
-			<DoctorDashboardPage />
+			<UserDashboardPage />
 		</>
 	);
 };

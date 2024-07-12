@@ -5,24 +5,16 @@ import PhilHealth from '@/public/images/philhealth-logo.webp';
 import DOH from '@/public/images/doh-logo.webp';
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 const FooterHero = () => {
-	const path = usePathname();
-	const pathList = ['/account', '/user', '/admin', '/nurse', '/doctor'];
-	const isPath = pathList.some((p) => path.includes(p));
-
 	return (
 		<>
-			<div
-				className={`${
-					isPath ? 'hidden' : 'flex'
-				} flex flex-col justify-center items-center w-full`}>
+			<div className='flex flex-col justify-center items-center w-full'>
 				<div className='w-11/12 max-w-screen-2xl'>
 					<footer className='grid md:grid-cols-2 lg:grid-cols-4 grid-cols-1 gap-10 lg:gap-0  w-full p-10 bg-base-200 text-base-content'>
 						<nav className='flex flex-col gap-3'>
 							<h6 className='font-bold'>Services</h6>
 							<Link href={'/services'}>Offered Services</Link>
-							<Link href={'/find-doctor'}>Find a Doctor</Link>
+							<Link href={'/doctors'}>Doctors</Link>
 							<Link href={'/call-hotlines'}>Call and Hotlines</Link>
 							<Link href={'/appointment'}>Book an Appointment</Link>
 						</nav>
