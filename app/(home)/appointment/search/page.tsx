@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import SearchAppointmentForm from '@/app/appointment/search/SearchAppointmentForm';
+import SearchAppointmentForm from '@/app/(home)/appointment/search/SearchAppointmentForm';
 import {
 	Card,
 	CardDescription,

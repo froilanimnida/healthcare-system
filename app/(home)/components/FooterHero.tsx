@@ -1,6 +1,5 @@
-'use client';
 import React from 'react';
-import Logo from '@/app/components/Logo';
+import Logo from '@/components/ui/Logo';
 import PhilHealth from '@/public/images/philhealth-logo.webp';
 import DOH from '@/public/images/doh-logo.webp';
 import Image from 'next/image';

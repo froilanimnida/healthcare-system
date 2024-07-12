@@ -1,5 +1,5 @@
 import React from 'react';
-import { HomeIcon, PhoneIcon } from '../icons';
+import { HomeIcon, PhoneIcon } from '../../../ui/icons';
 import Image from 'next/image';
 import CallingPerson from '@/public/images/hero/calling-person.jpg';
 import { Card, CardHeader, CardContent } from '@/components/ui/card';

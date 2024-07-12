@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
-import NavigationBarLandingPage from '@/app/components/NavigationBarLandingPage';
-import FooterHero from '@/app/ui/FooterHero';
+import NavigationBarLandingPage from '@/app/(home)/components/NavigationBarLandingPage';
+import FooterHero from '@/app/(home)/components/FooterHero';
 import { Inter } from 'next/font/google';
-import './globals.css';
+import '@/app/globals.css';
 import { Toaster } from 'react-hot-toast';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { Analytics } from '@vercel/analytics/react';

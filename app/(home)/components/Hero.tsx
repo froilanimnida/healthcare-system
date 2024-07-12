@@ -15,9 +15,6 @@ const Hero = () => {
 						words={'Welcome to Nora Birthing Care Clinic'}
 						className='text-2xl md:text-4xl font-bold'
 					/>
-					{/* <h1 className='text-2xl md:text-4xl font-bold'>
-						Welcome to Nora Birthing Care Clinic
-					</h1> */}
 					<p className='text-xl'>
 						Experience personalized and comprehensive healthcare at Nora
 						Birthing Care Clinic. Our dedicated team ensures your journey to

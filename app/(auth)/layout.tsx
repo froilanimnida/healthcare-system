@@ -1,4 +1,5 @@
 import React from 'react';
+import { TooltipProvider } from '@/components/ui/tooltip';
 
 const layout = () => {
 	return <div>layout</div>;
@@ -7,5 +8,11 @@ const layout = () => {
 export default function AuthenticatedLayout({
 	children,
 }: Readonly<{ children: React.ReactNode }>) {
-	return <div>{children}</div>;
+	return (
+		<html>
+			<body>
+				<TooltipProvider>{children} </TooltipProvider>
+			</body>
+		</html>
+	);
 }
