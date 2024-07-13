@@ -1,37 +1,22 @@
-'use client';
 import React from 'react';
 import { Search } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import Logo from '../ui/Logo';
 import Link from 'next/link';
-import { AboutIcon, ContactIcon, DoctorIcon } from '../ui/icons';
 import { Button } from '@/components/ui/button';
 
 const NavigationBarLandingPage = () => {
 	const links = [
-		{ name: 'About', href: '/about', icon: <AboutIcon /> },
-		{ name: 'Doctors', href: '/doctor', icon: <DoctorIcon /> },
-		{ name: 'Contact', href: '/contact', icon: <ContactIcon /> },
+		{ name: 'About', href: '/about' },
+		{ name: 'Doctors', href: '/doctor' },
+		{ name: 'Contact', href: '/contact' },
 		{
 			name: 'Appointment',
 			href: '/appointment',
-			icon: <Search />,
 		},
 	];
-	const path = usePathname();
-	const pathList = [
-		'/account',
-		'/user',
-		'/admin',
-		'/doctor',
-		'/telemedicine/call',
-	];
-	const isPath = pathList.some((p) => path.startsWith(p));
 	return (
-		<div
-			className={`${
-				isPath ? 'hidden' : 'block'
-			} w-full flex justify-center items-center my-10`}>
+		<div className='w-full flex justify-center items-center my-10'>
 			<div className='flex-row flex justify-between items-center w-11/12 max-w-screen-2xl'>
 				<Link href='/'>
 					<Logo />
