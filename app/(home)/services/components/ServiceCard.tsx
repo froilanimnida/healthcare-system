@@ -47,7 +47,10 @@ const ServiceCard = ({
 				))}
 			</CardContent>
 			<CardFooter className='flex justify-between items-center flex-row'>
-				<IWantToKnowMoreDialog links={links} />
+				<IWantToKnowMoreDialog
+					title={title}
+					links={links}
+				/>
 				<Button
 					asChild
 					variant={'ghost'}>

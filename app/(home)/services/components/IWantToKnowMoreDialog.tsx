@@ -13,10 +13,14 @@ import { Link as LinkIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface IWantToKnowMoreDialogProps {
+	title: string;
 	links: { title: string; url: string }[];
 }
 
-const IWantToKnowMoreDialog = ({ links }: IWantToKnowMoreDialogProps) => {
+const IWantToKnowMoreDialog = ({
+	links,
+	title,
+}: IWantToKnowMoreDialogProps) => {
 	return (
 		<AlertDialog>
 			<AlertDialogTrigger asChild>
@@ -24,12 +28,13 @@ const IWantToKnowMoreDialog = ({ links }: IWantToKnowMoreDialogProps) => {
 			</AlertDialogTrigger>
 			<AlertDialogContent>
 				<AlertDialogHeader>
-					<AlertDialogTitle>Links to know more about Prenatal</AlertDialogTitle>
+					<AlertDialogTitle>Links to know more about {title}</AlertDialogTitle>
 				</AlertDialogHeader>
 				<AlertDialogDescription className='flex flex-col gap-3'>
 					{links.map((link, index) => (
 						<Link
 							className='flex flex-row gap-3 hover:underline'
+							target='_blank'
 							href={link.url}
 							key={index}>
 							{link.title}
