@@ -95,7 +95,6 @@ const ViewAppointmentForm = async ({
 									<Label htmlFor={key}>{value}</Label>
 									<Input
 										name={key}
-										// placeholder={value}
 										type='text'
 										value={eval(key)}
 										readOnly
