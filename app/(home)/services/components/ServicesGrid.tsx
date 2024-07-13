@@ -38,7 +38,7 @@ const items = [
 		title: 'Maintenance for those in need',
 		description:
 			'Maintenance for those in need involves providing necessary care and support to those who are in need.',
-		link: '/services/maintenance',
+		link: '/services/maintenance-for-those-in-need',
 	},
 	{
 		title: 'HIV Testing',
