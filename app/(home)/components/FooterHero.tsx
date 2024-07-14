@@ -15,9 +15,9 @@ const FooterHero = () => {
 							<h6 className='font-bold'>Services</h6>
 							<Link href={'/services'}>Offered Services</Link>
 							<Link href={'/doctors'}>Doctors</Link>
-							<Link href={'/call-hotlines'}>Call and Hotlines</Link>
 							<Link href={'/appointment'}>Book an Appointment</Link>
 							<Link href={'/reviews'}>Reviews</Link>
+							<Link href={'/contact'}>Contact</Link>
 						</nav>
 						<nav className='flex flex-col gap-3'>
 							<h6 className='font-bold'>Company</h6>
