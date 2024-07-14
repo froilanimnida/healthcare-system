@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 	description: 'Nora Birthing Care Clinic Website and Booking System',
 };
 
-export default function RootLayout({
+export default function LandingLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode;

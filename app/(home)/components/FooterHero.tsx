@@ -4,6 +4,7 @@ import PhilHealth from '@/public/images/philhealth-logo.webp';
 import DOH from '@/public/images/doh-logo.webp';
 import Image from 'next/image';
 import Link from 'next/link';
+
 const FooterHero = () => {
 	return (
 		<>
@@ -16,6 +17,7 @@ const FooterHero = () => {
 							<Link href={'/doctors'}>Doctors</Link>
 							<Link href={'/call-hotlines'}>Call and Hotlines</Link>
 							<Link href={'/appointment'}>Book an Appointment</Link>
+							<Link href={'/reviews'}>Reviews</Link>
 						</nav>
 						<nav className='flex flex-col gap-3'>
 							<h6 className='font-bold'>Company</h6>
@@ -30,7 +32,7 @@ const FooterHero = () => {
 							<Link href={'/cookie-policy'}>Cookie policy</Link>
 						</nav>
 						<div className='flex flex-col gap-3'>
-							<h1>Accredited by:</h1>
+							<h1 className='font-bold'>Accredited by:</h1>
 							<Image
 								src={PhilHealth}
 								alt='PhilHealth'
@@ -46,12 +48,13 @@ const FooterHero = () => {
 						</div>
 					</footer>
 					<footer className='flex flex-row justify-between w-full py-4 border-t bg-base-200 text-base-content border-base-300'>
-						<aside className='items-center grid-flow-col'>
+						<aside className='items-start grid-flow-col flex flex-col gap-3'>
 							<Link href='/'>
 								<Logo />
 							</Link>
 							<p>
-								Nora Birthing Care Clinic <br />A Maternity Clinic
+								Nora Birthing Care Clinic <br />
+								<span className='font-bold'>A Maternity Clinic</span>
 							</p>
 						</aside>
 						<nav className='md:place-self-center md:justify-self-end'>
