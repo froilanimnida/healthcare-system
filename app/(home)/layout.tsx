@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import NavigationBarLandingPage from '@/app/(home)/components/NavigationBarLandingPage';
+import { NavigationBarLandingPage } from '@/app/(home)/components/NavigationBarLandingPage';
 import FooterHero from '@/app/(home)/components/FooterHero';
 import { Inter } from 'next/font/google';
 import '@/app/globals.css';
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 	description: 'Nora Birthing Care Clinic Website and Booking System',
 };
 
-export default function RootLayout({
+export default function LandingLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode;
@@ -28,12 +28,10 @@ export default function RootLayout({
 			<TooltipProvider>
 				<body className={`${inter.className} min-h-screen w-full`}>
 					<Toaster />
-					<main className='min-h-screen w-full flex justify-center'>
-						<div className='flex flex-col w-full min-h-screen'>
-							<NavigationBarLandingPage />
-							{children}
-							<FooterHero />
-						</div>
+					<main className='w-full flex flex-col items-center justify-center'>
+						<NavigationBarLandingPage />
+						<div className='flex flex-col mt-32 w-full'>{children}</div>
+						<FooterHero />
 					</main>
 					<Analytics />
 					<SpeedInsights />

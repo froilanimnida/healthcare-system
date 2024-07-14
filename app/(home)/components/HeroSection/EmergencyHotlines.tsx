@@ -7,7 +7,7 @@ import { Card, CardHeader, CardContent } from '@/components/ui/card';
 const EmergencyHotlines = () => {
 	return (
 		<div className='flex flex-col lg:flex-row justify-center lg:justify-between items-center gap-10'>
-			<div className='lg:w-1/2 xl:w-2/5'>
+			<div className='lg:w-1/2 w-full xl:w-2/5'>
 				<iframe
 					className='w-full h-96'
 					src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3857.866709025607!2d121.05598257684599!3d14.776536872741584!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397afe8680f9e95%3A0x257884cc48494957!2sNora%20Birthing%20Care%20Clinic!5e0!3m2!1sen!2sph!4v1716355151741!5m2!1sen!2sph'
