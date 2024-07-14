@@ -9,9 +9,9 @@ const Reviews = () => {
 			name: 'Jessica Calzita Guisihan',
 			content: (
 				<p>
-					<Highlight>very accommodating.. </Highlight> thanks to ate Nora for
-					being <Highlight>supportive and careful midwife..</Highlight> She will
-					never fail you in all aspect from checkup up to delivery...
+					very accommodating.. thanks to ate Nora for being supportive and
+					careful midwife.. She will never fail you in all aspect from checkup
+					up to delivery...
 				</p>
 			),
 			designation: '2021-05-31',
@@ -22,8 +22,8 @@ const Reviews = () => {
 			content: (
 				<p>
 					I am so grateful for all you did throughout my pregnancy. Your
-					<Highlight> constant </Highlight> support during this special time was
-					invaluable to me. To: Ms. Noreen and ate Nora.
+					constant support during this special time was invaluable to me. To:
+					Ms. Noreen and ate Nora.
 				</p>
 			),
 			designation: '2021-04-09',
@@ -33,9 +33,8 @@ const Reviews = () => {
 			name: 'Leonanel Mangaong Bargo',
 			content: (
 				<p>
-					Salamat po ate nora <Highlight>napakabait</Highlight> at{' '}
-					<Highlight>maasikaso</Highlight> nyo po dalawang beses na po ako
-					nanganak sa lying in nyo😊😊😊
+					Salamat po ate nora napakabait at maasikaso nyo po dalawang beses na
+					po ako nanganak sa lying in nyo😊😊😊
 				</p>
 			),
 			designation: '2021-07-22',
@@ -53,20 +52,3 @@ const Reviews = () => {
 };
 
 export default Reviews;
-export const Highlight = ({
-	children,
-	className,
-}: {
-	children: React.ReactNode;
-	className?: string;
-}) => {
-	return (
-		<span
-			className={cn(
-				'font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-700/[0.2] dark:text-emerald-500 px-1 py-0.5',
-				className,
-			)}>
-			{children}
-		</span>
-	);
-};
