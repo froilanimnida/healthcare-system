@@ -10,8 +10,10 @@ import {
 
 const Contact = () => {
 	return (
-		<div className='w-full flex flex-col justify-center items-center'>
-			<h1 className='text-xl md:text-2xl lg:text-4xl font-bold'>Contacts</h1>
+		<div className='w-full flex flex-col justify-center gap-5 items-center'>
+			<h1 className='text-xl text-left md:text-2xl lg:text-4xl font-bold'>
+				Contacts
+			</h1>
 			<Card>
 				<CardHeader>
 					<CardTitle>Reach us:</CardTitle>
