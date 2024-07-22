@@ -50,6 +50,8 @@ function Navbar({ className }: { className?: string }) {
 							</HoveredLink>
 						</div>
 					</MenuItem>
+					<HoveredLink href={'/appointment'}>Appointment</HoveredLink>
+					<HoveredLink href={'/list-of-doctors'}>Doctors</HoveredLink>
 					<MenuItem
 						setActive={setActive}
 						active={active}
@@ -66,12 +68,7 @@ function Navbar({ className }: { className?: string }) {
 					<Button
 						asChild
 						variant='default'>
-						<Link href={'/account/login'}>Log In</Link>
-					</Button>
-					<Button
-						asChild
-						variant='outline'>
-						<Link href={'/account/sign-up'}>Sign Up</Link>
+						<Link href={'/appointment/search'}>Search an appointment</Link>
 					</Button>
 				</div>
 			</Menu>
