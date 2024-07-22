@@ -17,17 +17,19 @@ export const MenuItem = ({
 	setActive,
 	active,
 	item,
+	className,
 	children,
 }: {
 	setActive: (item: string) => void;
 	active: string | null;
 	item: string;
+	className?: string;
 	children?: React.ReactNode;
 }) => {
 	return (
 		<div
 			onMouseEnter={() => setActive(item)}
-			className='relative '>
+			className={`relative ${className}`}>
 			<motion.p
 				transition={{ duration: 0.3 }}
 				className='cursor-pointer text-black font-semibold hover:opacity-[0.9] dark:text-white'>
@@ -61,14 +63,16 @@ export const MenuItem = ({
 export const Menu = ({
 	setActive,
 	children,
+	className,
 }: {
 	setActive: (item: string | null) => void;
 	children: React.ReactNode;
+	className?: string;
 }) => {
 	return (
 		<nav
 			onMouseLeave={() => setActive(null)} // resets the state
-			className='relative border border-transparent dark:bg-black dark:border-white/[0.2] bg-white/20 backdrop-blur-lg shadow-input flex justify-around items-center space-x-4 px-8 py-6 '>
+			className={`${className} relative border border-transparent dark:bg-black dark:border-white/[0.2] bg-white/20 backdrop-blur-lg shadow-input flex  items-center space-x-4 px-8 py-6`}>
 			{children}
 		</nav>
 	);
@@ -108,11 +112,11 @@ export const ProductItem = ({
 	);
 };
 
-export const HoveredLink = ({ children, ...rest }: any) => {
+export const HoveredLink = ({ className, children, ...rest }: any) => {
 	return (
 		<Link
 			{...rest}
-			className='text-neutral-700 dark:text-neutral-200 hover:text-black '>
+			className={`${className} font-semibold text-neutral-700 dark:text-neutral-200 hover:text-black`}>
 			{children}
 		</Link>
 	);

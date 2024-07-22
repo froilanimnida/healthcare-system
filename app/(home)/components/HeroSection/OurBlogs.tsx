@@ -1,39 +1,29 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import StaticImageOne from '@/public/images/hero/static-blog-image-1.jpg';
-import StaticImageTwo from '@/public/images/hero/static-blog-image-2.jpg';
-import StaticImageThree from '@/public/images/hero/static-blog-image-3.jpg';
-import { stat } from 'fs/promises';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 
 // change the blogs to maternal health blogs
-const OurBlogs = () => {
+const HelpfulPosts = () => {
 	const staticCardContent = [
 		{
-			thumbnails: StaticImageOne,
-			date: 'May 12, 2021',
-			title: 'How to take care of your baby',
+			title: 'Family planning | Do it right',
 			description:
-				'Learn about the essentials of baby care. Discover tips on how to keep your baby healthy and happy.',
-			link: '/how-to-maintain-good-health',
+				'Learn about the importance of family planning and how to do it right. Discover the benefits of family planning to your health and well-being.',
+			link: 'post/how-to-maintain-good-health',
 		},
 		{
-			thumbnails: StaticImageTwo,
-			date: 'June 15, 2021',
 			title:
 				'Importance of regular exercise and physical activity to your maternal health',
 			description:
 				'Understand the benefits of regular exercise and physical activity to your maternal health. Learn how to stay fit and healthy during pregnancy.',
-			link: '/importance-of-regular-exercise',
+			link: 'post/importance-of-regular-exercise',
 		},
 		{
-			thumbnails: StaticImageThree,
-			date: 'July 20, 2021',
 			title: 'Healthy eating and balanced diet for maternal health',
 			description:
 				'Learn about the importance of healthy eating and balanced diet to your maternal health. Discover the essentials of a healthy diet.',
-			link: '/healthy-eating-habits',
+			link: 'post/healthy-eating-habits',
 		},
 	];
 	return (
@@ -48,11 +38,11 @@ const OurBlogs = () => {
 							key={index}
 							className='w-full bg-base-100'>
 							<CardContent className='flex flex-col gap-3'>
-								<Image
+								{/* <Image
 									className='mt-5 rounded-xl'
 									src={content.thumbnails}
 									alt='Blog Thumbnail'
-								/>
+								/> */}
 								<h2 className='font-bold text-lg'>{content.title}</h2>
 								<p>{content.description}</p>
 							</CardContent>
@@ -83,4 +73,4 @@ const OurBlogs = () => {
 	);
 };
 
-export default OurBlogs;
+export default HelpfulPosts;

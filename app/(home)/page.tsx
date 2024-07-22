@@ -1,7 +1,7 @@
 import Hero from '@/app/(home)/components/Hero';
 import OurMedicalServices from '@/app/(home)/components/HeroSection/OurMedicalServices';
 import TrustYourHealthToUsCard from '@/app/(home)/components/HeroSection/TrustYourHealthToUsCard';
-import OurBlogs from '@/app/(home)/components/HeroSection/OurBlogs';
+import HelpfulPosts from '@/app/(home)/components/HeroSection/OurBlogs';
 import EmergencyHotlines from '@/app/(home)/components/HeroSection/EmergencyHotlines';
 
 export default function Home() {
@@ -11,8 +11,8 @@ export default function Home() {
 				<Hero />
 				<OurMedicalServices />
 				<TrustYourHealthToUsCard />
-				<OurBlogs />
 				<EmergencyHotlines />
+				<HelpfulPosts />
 			</div>
 		</div>
 	);

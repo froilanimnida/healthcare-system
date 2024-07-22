@@ -23,11 +23,13 @@ function Navbar({ className }: { className?: string }) {
 	const [active, setActive] = useState<string | null>(null);
 	return (
 		<div className={cn('fixed inset-x-0 w-full mx-auto z-50', className)}>
-			<Menu setActive={setActive}>
+			<Menu
+				className='justify-between md:justify-around'
+				setActive={setActive}>
 				<Link href='/'>
 					<Logo />
 				</Link>
-				<div className='flex flex-row items-center justify-center gap-5'>
+				<div className='hidden flex-row items-center md:flex justify-center gap-5'>
 					<MenuItem
 						setActive={setActive}
 						active={active}
@@ -50,6 +52,8 @@ function Navbar({ className }: { className?: string }) {
 							</HoveredLink>
 						</div>
 					</MenuItem>
+					<HoveredLink href={'/appointment'}>Appointment</HoveredLink>
+					<HoveredLink href={'/list-of-doctors'}>Doctors</HoveredLink>
 					<MenuItem
 						setActive={setActive}
 						active={active}
@@ -66,12 +70,7 @@ function Navbar({ className }: { className?: string }) {
 					<Button
 						asChild
 						variant='default'>
-						<Link href={'/account/login'}>Log In</Link>
-					</Button>
-					<Button
-						asChild
-						variant='outline'>
-						<Link href={'/account/sign-up'}>Sign Up</Link>
+						<Link href={'/appointment/search'}>Search an appointment</Link>
 					</Button>
 				</div>
 			</Menu>
