@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 
 const TrustYourHealthToUsCard = () => {
 	return (
-		<Card className='bg-indigo-100 p-5 gap-5 md:gap-7 rounded-xl flex flex-col md:flex-row'>
+		<Card className='p-5 gap-5 md:gap-7 rounded-xl flex flex-col md:flex-row'>
 			<div className='w-full'>
 				<Image
 					className='rounded-xl h-full object-cover'
@@ -33,7 +33,7 @@ const TrustYourHealthToUsCard = () => {
 						<Link href={'/appointment'}>Book an appointment</Link>
 					</Button>
 					<Button variant={'outline'}>
-						<Link href={'/trust-your-health-to-us'}>
+						<Link href={'/list-of-doctors'}>
 							Learn more about our prenatal care team
 						</Link>
 					</Button>
