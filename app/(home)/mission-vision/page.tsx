@@ -40,6 +40,31 @@ const MissionVisionPage = () => {
 							their newborn by adhering to DOH prescribed healthcare standard.
 						</p>
 					</div>
+
+					<div className='flex flex-col gap-5'>
+						<h1 className='font-bold text-xl md:text-2xl lg:text-3xl'>
+							Objectives
+						</h1>
+						<p>
+							Guided by the above mission and vision the following are the
+							objectives of the birthing facility
+						</p>
+
+						<ul className='list-disc pl-5'>
+							<li>
+								Provide and educate every woman, the family and the community
+								with correct information regarding good health practices.
+							</li>
+							<li>
+								Educate pregnant women with proper self-care, pre-natal care and
+								post-partum care.
+							</li>
+							<li>
+								Make available to the newbord babies the necessary vaccines
+								includeing the implementation of newboarn screening.
+							</li>
+						</ul>
+					</div>
 				</CardContent>
 			</Card>
 		</div>
