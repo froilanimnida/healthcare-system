@@ -1,9 +1,11 @@
 import React from 'react';
 import Logo from '@/components/ui/Logo';
 import PhilHealth from '@/public/images/philhealth-logo.webp';
+import ThemeToggler from '@/components/ui/ThemeToggler';
 import DOH from '@/public/images/doh-logo.webp';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 const FooterHero = () => {
 	return (
@@ -24,7 +26,7 @@ const FooterHero = () => {
 							<h6 className='font-bold'>Company</h6>
 							<Link href={'/about-us'}>About us</Link>
 							<Link href={'/history'}>History</Link>
-							<Link href={'/mission-vision'}>Mission & Vision</Link>
+							<Link href={'/mission-vision'}>Mission, Vision & Objectives</Link>
 						</nav>
 						<nav className='flex flex-col gap-3'>
 							<h6 className='font-bold'>Legal</h6>
@@ -59,56 +61,69 @@ const FooterHero = () => {
 							</p>
 						</aside>
 						<nav className='md:place-self-center md:justify-self-end'>
-							<div className='grid grid-flow-col gap-4'>
-								<Link
-									type='button'
-									target='_blank'
-									href={
-										'https://www.facebook.com/phase7bBagongSilangBirthingClinic'
-									}>
-									<svg
-										xmlns='http://www.w3.org/2000/svg'
-										viewBox='0 0 24 24'
-										className='fill-current w-6 h-6'>
-										<path d='M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z'></path>
-									</svg>
-								</Link>
-								<Link
-									target='_blank'
-									role='button'
-									href={'mailto:nsvelasquez@yahoo.com'}>
-									<svg
-										xmlns='http://www.w3.org/2000/svg'
-										fill='none'
-										viewBox='0 0 24 24'
-										strokeWidth={1.5}
-										stroke='currentColor'
-										className='w-6 h-6'>
-										<path
-											strokeLinecap='round'
-											strokeLinejoin='round'
-											d='M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75'
-										/>
-									</svg>
-								</Link>
-								<Link
-									href={'https://maps.app.goo.gl/mN7Hv7LBe5tMos288'}
-									role='button'
-									target='_blank'>
-									<svg
-										xmlns='http://www.w3.org/2000/svg'
-										fill='none'
-										viewBox='0 0 24 24'
-										strokeWidth={1.5}
-										stroke='currentColor'
-										className='w-6 h-6'>
-										<path
-											strokeLinecap='round'
-											strokeLinejoin='round'
-											d='M9 6.75V15m6-6v8.25m.503 3.498 4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 0 0-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0Z'
-										/>
-									</svg>
-								</Link>
+							<div className='flex flex-row items-center gap-1'>
+								<Button
+									asChild
+									variant='ghost'>
+									<Link
+										type='button'
+										target='_blank'
+										href={
+											'https://www.facebook.com/phase7bBagongSilangBirthingClinic'
+										}>
+										<svg
+											xmlns='http://www.w3.org/2000/svg'
+											viewBox='0 0 24 24'
+											className='fill-current w-6 h-6'>
+											<path d='M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z'></path>
+										</svg>
+									</Link>
+								</Button>
+								<Button
+									asChild
+									variant='ghost'>
+									<Link
+										target='_blank'
+										role='button'
+										href={'mailto:nsvelasquez@yahoo.com'}>
+										<svg
+											xmlns='http://www.w3.org/2000/svg'
+											fill='none'
+											viewBox='0 0 24 24'
+											strokeWidth={1.5}
+											stroke='currentColor'
+											className='w-6 h-6'>
+											<path
+												strokeLinecap='round'
+												strokeLinejoin='round'
+												d='M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75'
+											/>
+										</svg>
+									</Link>
+								</Button>
+								<Button
+									asChild
+									variant='ghost'>
+									<Link
+										href={'https://maps.app.goo.gl/mN7Hv7LBe5tMos288'}
+										role='button'
+										target='_blank'>
+										<svg
+											xmlns='http://www.w3.org/2000/svg'
+											fill='none'
+											viewBox='0 0 24 24'
+											strokeWidth={1.5}
+											stroke='currentColor'
+											className='w-6 h-6'>
+											<path
+												strokeLinecap='round'
+												strokeLinejoin='round'
+												d='M9 6.75V15m6-6v8.25m.503 3.498 4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 0 0-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0Z'
+											/>
+										</svg>
+									</Link>
+								</Button>
+								<ThemeToggler />
 							</div>
 						</nav>
 					</footer>
