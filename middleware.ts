@@ -8,9 +8,9 @@ export async function middleware(request: NextRequest) {
 
 	const user = JSON.parse(response.headers.get('x-supabase-user') || '{}').data
 		?.user;
-	const authPaths = ['/admin/*', '/user/*', '/nurse/*', '/doctor/*'];
+	const authPaths = ['/admin/', '/user/', '/nurse/', '/doctor/'];
 	const isAuthPaths = authPaths.some((path) =>
-		new RegExp(`^${path.replace('*', '.*')}$`).test(request.nextUrl.pathname),
+		request.nextUrl.pathname.startsWith(path),
 	);
 
 	if (isAuthPaths && user === null) {
@@ -18,7 +18,6 @@ export async function middleware(request: NextRequest) {
 		url.pathname = '/account/login';
 		return NextResponse.rewrite(url);
 	}
-
 
 	if (user?.role === '' || user?.role === null) {
 		const url = request.nextUrl.clone();
