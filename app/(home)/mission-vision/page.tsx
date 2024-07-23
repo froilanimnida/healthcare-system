@@ -14,7 +14,7 @@ const MissionVisionPage = () => {
 				<CardHeader>
 					<CardTitle>Mission and Vision</CardTitle>
 					<CardDescription>
-						Discover our mission and vision for the Nora Birthing
+						Discover our mission, vision and objectives of Nora Birthing
 					</CardDescription>
 				</CardHeader>
 				<CardContent className='mt-5 flex flex-col gap-10'>
