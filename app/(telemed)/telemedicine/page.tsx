@@ -23,7 +23,6 @@ const page = () => {
 					</CardDescription>
 				</CardHeader>
 				<CardContent>
-					<PermissionDialog />
 					<Button>
 						<Link href='/telemedicine/schedule'>Schedule a call</Link>
 					</Button>

@@ -2,13 +2,17 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import {
-	Dialog,
-	DialogContent,
-	DialogDescription,
-	DialogHeader,
-	DialogTitle,
-	DialogTrigger,
-} from '@/components/ui/dialog';
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+import { Check, X } from 'lucide-react';
 
 const PermissionDialog = () => {
 	const localStorage =
@@ -47,27 +51,23 @@ const PermissionDialog = () => {
 			.catch(() => setPermission('denied'));
 	};
 
-	return permission !== 'granted' ? (
-		<Dialog defaultOpen={true}>
-			<DialogContent>
-				<DialogHeader>
-					<DialogTitle>Permission is not granted</DialogTitle>
-					<DialogDescription>
-						Telemedicine needs some necessary permissions to work properly.
-					</DialogDescription>
-				</DialogHeader>
-				<div className='grid gap-4 py-4'>
-					<div className='grid grid-cols-4 items-center gap-4'>
-						<Button
-							variant={'default'}
-							onClick={handleAllow}>
-							Allow
-						</Button>
-					</div>
-				</div>
-			</DialogContent>
-		</Dialog>
-	) : null;
+	return (
+		<AlertDialog>
+			<AlertDialogTrigger>Open</AlertDialogTrigger>
+			<AlertDialogContent>
+				<AlertDialogHeader>
+					<AlertDialogTitle>Necessary Permission Checker</AlertDialogTitle>
+					<AlertDialogDescription>
+						Manage your camera and microphone permissions.
+					</AlertDialogDescription>
+				</AlertDialogHeader>
+				<AlertDialogFooter>
+					<AlertDialogCancel>Close</AlertDialogCancel>
+					<AlertDialogAction>Allow</AlertDialogAction>
+				</AlertDialogFooter>
+			</AlertDialogContent>
+		</AlertDialog>
+	);
 };
 
 export default PermissionDialog;
