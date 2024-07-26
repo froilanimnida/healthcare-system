@@ -23,7 +23,7 @@ const FooterHero = () => {
 							<Link href={'/blogs'}>Blogs</Link>
 						</nav>
 						<nav className='flex flex-col gap-3'>
-							<h6 className='font-bold'>Company</h6>
+							<h6 className='font-bold'>Clinic</h6>
 							<Link href={'/about-us'}>About us</Link>
 							<Link href={'/history'}>History</Link>
 							<Link href={'/mission-vision'}>Mission, Vision & Objectives</Link>
