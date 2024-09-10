@@ -34,7 +34,7 @@
 		"@types/react-google-recaptcha": "^2.1.9",
 		"@vercel/analytics": "^1.2.2",
 		"@vercel/speed-insights": "^1.0.10",
-		"axios": "^1.6.8",
+		"axios": "^1.7.4",
 		"class-variance-authority": "^0.7.0",
 		"clsx": "^2.1.1",
 		"date-fns": "^3.6.0",
